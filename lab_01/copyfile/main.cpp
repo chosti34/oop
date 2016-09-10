@@ -2,45 +2,53 @@
 #include <fstream>
 #include <string>
 
+using namespace std;
+
 int main(int argc, char *argv[])
 {
-    setlocale(LC_ALL, "Russian");
-
     if (argc != 3)
     {
-        std::cout << "Укажите <входной_файл> <выходной_файл>" << std::endl;
-        exit(1);
+        cout << "Invalid arguments count\n"
+             << "Usage: copyfile.exe <input file> <output file>\n";
+        return 1;
     }
 
-    std::ifstream infile(argv[1]);
+    ifstream input(argv[1]);
 
-    if (!infile)
+    if (!input.is_open())
     {
-        std::cout << "Ошибка открытия файла для чтения" << std::endl;
-        exit(1);
+        cout << "Failed to open " << argv[1] << " for reading\n";
+        return 1;
     }
 
-    std::ofstream outfile(argv[2]);
+    ofstream output(argv[2]);
 
-    if (!outfile)
+    if (!output.is_open())
     {
-        std::cout << "Ошибка открытия файла для вывода" << std::endl;
-        exit(1);
+        cout << "Failed to open " << argv[2] << " for writing\n";
+        return 1;
     }
 
-    std::string str;
+    char ch;
 
-    while (!infile.eof())
+    while (input.get(ch))
     {
-        std::getline(infile, str);
-
-        outfile << str << std::endl;
+        if (!output.put(ch))
+        {
+            cout << "Failed to save data on disk\n";
+            return 1;
+        }
     }
 
-    std::cout << "Файл " << argv[1] << " был скопирован в " << argv[2];
-
-    infile.close();
-    outfile.close();
+    if (!output.flush())
+    {
+        cout << "Failed to save data on disk\n";
+        return 1;
+    }
+    else
+    {
+        cout << "File " << argv[1] << " was copied into " << argv[2] << endl;
+    }
 
     return 0;
 }
