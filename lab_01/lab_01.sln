@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "replace", "replace\replace.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "calcbits", "calcbits\calcbits.vcxproj", "{3F0F18F7-9144-4CB6-A0B6-27F012D8B396}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "invert", "invert\invert.vcxproj", "{A5056231-6CBB-4137-94A6-C9D5C4325A74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{3F0F18F7-9144-4CB6-A0B6-27F012D8B396}.Release|x64.Build.0 = Release|x64
 		{3F0F18F7-9144-4CB6-A0B6-27F012D8B396}.Release|x86.ActiveCfg = Release|Win32
 		{3F0F18F7-9144-4CB6-A0B6-27F012D8B396}.Release|x86.Build.0 = Release|Win32
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Debug|x64.ActiveCfg = Debug|x64
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Debug|x64.Build.0 = Debug|x64
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Debug|x86.ActiveCfg = Debug|Win32
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Debug|x86.Build.0 = Debug|Win32
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Release|x64.ActiveCfg = Release|x64
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Release|x64.Build.0 = Release|x64
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Release|x86.ActiveCfg = Release|Win32
+		{A5056231-6CBB-4137-94A6-C9D5C4325A74}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
