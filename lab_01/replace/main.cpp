@@ -42,13 +42,14 @@ int main(int argc, char *argv[])
 
     string searchStr = argv[3];
     string replaceStr = argv[4];
-    string currStr;
 
     if (searchStr.length() == 0)
     {
         cout << "String to search cannot be empty!\n";
         return 1;
     }
+
+    string currStr;
 
     while (!input.eof())
     {
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
     else
     {
         cout << "All '" << argv[3] << "' was replaced into '"
-             <<  argv[4] << "' from '" << argv[1] << "' to '" << argv[2] << "'!\n";
+             << argv[4] << "' from '" << argv[1] << "' to '" << argv[2] << "'!\n";
     }
 
     return 0;
