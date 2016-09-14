@@ -6,7 +6,7 @@ using namespace std;
 
 void ReplaceString(string &str, const string &searchStr, const string &replaceStr)
 {
-    int position = 0;
+    size_t position = 0;
 
     while ((position = str.find(searchStr, position)) != string::npos)
     {
@@ -51,10 +51,8 @@ int main(int argc, char *argv[])
 
     string currStr;
 
-    while (!input.eof())
+    while (getline(input, currStr))
     {
-        getline(input, currStr);
-
         ReplaceString(currStr, searchStr, replaceStr);
 
         output << currStr << endl;
