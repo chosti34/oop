@@ -10,7 +10,7 @@ rem Checking with too high value of byte
 %PROGRAM% 300 2 L
 if NOT ERRORLEVEL 1 goto err
 
-rem Checking some random values (2 2 R) => maxbyte
+rem Checking some random values (2 2 R) => (2^7 = 128)
 %PROGRAM% 2 2 R > %TEMP%\output.txt
 if ERRORLEVEL 1 goto err
 fc.exe %TEMP%\output.txt two-power-seven.txt
