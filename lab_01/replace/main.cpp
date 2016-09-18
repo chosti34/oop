@@ -4,49 +4,65 @@
 
 using namespace std;
 
-void ReplaceString(string &str, const string &searchStr, const string &replaceStr)
+void OpenFileForReading(ifstream &file, const string &fileName)
 {
-    size_t position = 0;
+    file.open(fileName);
 
-    while ((position = str.find(searchStr, position)) != string::npos)
+    if (!file.is_open())
     {
-        str.replace(position, searchStr.length(), replaceStr);
-        position += replaceStr.length();
+        cout << "Failed to open " << fileName << " for reading!" << endl;
+        exit(1);
+    }
+
+    if (file.eof())
+    {
+        cout << "File is empty, nothing to read...";
+        exit(1);
     }
 }
 
-int main(int argc, char *argv[])
+void OpenFileForWriting(ofstream &file, const string &fileName)
 {
-    if (argc != 5)
+    file.open(fileName);
+
+    if (!file.is_open())
     {
-        cout << "Invalid arguments count\n"
-             << "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
-        return 1;
+        cout << "Failed to open " << fileName << " for writing!" << endl;
+        exit(1);
+    }
+}
+
+void ReplaceString(string &str, const string &searchStr, const string &replaceStr)
+{
+    size_t position = 0;
+    size_t i = 0;
+
+    string newStr = "";
+
+    while (((position = str.find(searchStr, position)) != string::npos) || (i != str.length()))
+    {
+        if (i == position)
+        {
+            newStr += replaceStr;
+            position += searchStr.length();
+            i += searchStr.length();
+        }
+        else
+        {
+            newStr += str[i];
+            ++i;
+        }
     }
 
-    ifstream input(argv[1]);
+    str = newStr;
+}
 
-    if (!input.is_open())
-    {
-        cout << "Failed to open " << argv[1] << " for reading\n";
-        return 1;
-    }
-
-    ofstream output(argv[2]);
-
-    if (!input.is_open())
-    {
-        cout << "Failed to open " << argv[2] << " for writing\n";
-        return 1;
-    }
-
-    string searchStr = argv[3];
-    string replaceStr = argv[4];
-
+void ReplaceStringsInFile(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr)
+{
     if (searchStr.length() == 0)
     {
-        cout << "String to search cannot be empty!\n";
-        return 1;
+        cout << "String to search cannot be empty" << endl;
+        exit(1);
     }
 
     string currStr;
@@ -61,13 +77,29 @@ int main(int argc, char *argv[])
     if (!output.flush())
     {
         cout << "Failed to save data on disk\n";
+        exit(1);
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc != 5)
+    {
+        cout << "Invalid arguments count\n"
+             << "Usage: replace.exe <input file> <output file> <search string> <replace string>\n";
         return 1;
     }
-    else
-    {
-        cout << "All '" << argv[3] << "' was replaced into '"
-             << argv[4] << "' from '" << argv[1] << "' to '" << argv[2] << "'!\n";
-    }
+
+    ifstream input;
+    ofstream output;
+
+    OpenFileForReading(input, argv[1]);
+    OpenFileForWriting(output, argv[2]);
+
+    ReplaceStringsInFile(input, output, argv[3], argv[4]);
+
+    cout << "All '" << argv[3] << "' was replaced into '"
+         << argv[4] << "' from '" << argv[1] << "' to '" << argv[2] << "'!\n";
 
     return 0;
 }
