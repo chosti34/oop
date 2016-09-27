@@ -3,24 +3,25 @@
 
 using namespace std;
 
-enum Directions
+enum struct Direction
 {
-    leftDirection, rightDirection
+    LEFT,
+    RIGHT
 };
 
-void ShiftBitsInByte(unsigned int &byte, unsigned int &bits, const enum Directions &choice)
+void ShiftBitsInByte(unsigned int &byte, unsigned int &bits, Direction &choice)
 {
     bits %= 8;
 
     switch (choice)
     {
-        case rightDirection:
+        case Direction::RIGHT:
         {
             byte = (byte >> bits) | (byte << (8 - bits));
             byte &= 255;
             break;
         }
-        case leftDirection:
+        case Direction::LEFT:
         {
             byte = (byte << bits) | (byte >> (8 - bits));
             byte &= 255;
@@ -70,15 +71,15 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    Directions direction;
+    Direction direction;
 
     if (choice == "R")
     {
-        direction = rightDirection;
+        direction = Direction::RIGHT;
     }
     else if (choice == "L")
     {
-        direction = leftDirection;
+        direction = Direction::RIGHT;
     }
 
     ShiftBitsInByte(byte, bits, direction);
