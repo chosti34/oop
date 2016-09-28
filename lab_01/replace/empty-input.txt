@@ -1,1 +1,1 @@
-String to search cannot be empty
+String to search cannot be empty!
