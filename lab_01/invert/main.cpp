@@ -17,7 +17,7 @@ void OpenFileForReading(ifstream &file, const string &fileName)
 
     if (file.eof())
     {
-        cout << "File " << fileName << " is empty! Nothing to read..." << endl;
+        cout << "Files " << fileName << " is empty! Nothing to read..." << endl;
         exit(1);
     }
 }

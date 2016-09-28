@@ -4,10 +4,6 @@ rem Checking with non-existing file...
 %PROGRAM% non-existing-file.txt
 if NOT ERRORLEVEL 1 goto err
 
-rem Checking with empty file...
-%PROGRAM% empty.txt
-if NOT ERRORLEVEL 1 goto err
-
 rem Checking with determinant equals to zero
 %PROGRAM% zero-determinant-matrix.txt
 if NOT ERRORLEVEL 1 goto err
