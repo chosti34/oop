@@ -22,6 +22,7 @@ void ReplaceString(string &str, const string &searchStr, const string &replaceSt
     size_t position = str.find(searchStr, i);
 
     string newStr;
+    newStr.reserve(str.length());
 
     while ((position != string::npos) || (i != str.length()))
     {

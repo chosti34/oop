@@ -10,7 +10,7 @@ enum struct Direction
     LEFT
 };
 
-Direction SetRotateDirection(const string &choice)
+Direction GetRotateDirection(const string &choice)
 {
     if (choice == "R")
     {
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     }
 
     string choice = argv[3];
-    Direction direction = SetRotateDirection(choice);
+    Direction direction = GetRotateDirection(choice);
 
     if (direction != Direction::NONE)
     {
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     else
     {
         cout << "Invalid direction choice\n"
-                "Use <R / L> instead of" << argv[3] << endl;
+             << "Use <R / L> instead of" << argv[3] << endl;
         return 1;
     }
 

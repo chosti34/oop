@@ -27,6 +27,7 @@ fc.exe %TEMP%\output.txt two-power-four.txt
 if ERRORLEVEL 1 goto err
 
 
+
 echo Program testing succedeed!
 exit 0
 

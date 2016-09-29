@@ -3,26 +3,17 @@
 #include <string>
 #include <iomanip>
 
+typedef double Matrix3x3[3][3];
+
 using namespace std;
 
-void OpenFileForReading(ifstream &file, const string &fileName)
+bool OpenFileForReading(ifstream &file, const string &fileName)
 {
     file.open(fileName);
-
-    if (!file.is_open())
-    {
-        cout << "Failed to open " << fileName << " for reading!" << endl;
-        exit(1);
-    }
-
-    if (file.eof())
-    {
-        cout << "Files " << fileName << " is empty! Nothing to read..." << endl;
-        exit(1);
-    }
+    return file.is_open();
 }
 
-void ReadMatrixFromFile(ifstream &file, double (&matrix)[3][3])
+void ReadMatrixFromFile(ifstream &file, Matrix3x3 matrix)
 {
     for (int row = 0; row < 3; ++row)
     {
@@ -33,7 +24,7 @@ void ReadMatrixFromFile(ifstream &file, double (&matrix)[3][3])
     }
 }
 
-void PrintMatrix(double (&matrix)[3][3])
+void PrintMatrix(Matrix3x3 matrix)
 {
     for (int row = 0; row < 3; ++row)
     {
@@ -52,7 +43,7 @@ void PrintMatrix(double (&matrix)[3][3])
     }
 }
 
-double GetMinor(const double (&matrix)[3][3], const int i, const int j)
+double GetMinor(Matrix3x3 matrix, const int i, const int j)
 {
     double minorElements[4];
     int currElementIndex = 0;
@@ -72,7 +63,7 @@ double GetMinor(const double (&matrix)[3][3], const int i, const int j)
     return (minorElements[0] * minorElements[3]) - (minorElements[1] * minorElements[2]);
 }
 
-double GetDeterminant(double (&matrix)[3][3])
+double GetDeterminant(Matrix3x3 matrix)
 {
     double determinant = 0;
     int sign = 1;
@@ -96,7 +87,7 @@ void SwapTwo(double &firstOperand, double &secondOperand)
     secondOperand = temporaryElement;
 }
 
-void TransposeMatrix(double (&matrix)[3][3])
+void TransposeMatrix(Matrix3x3 matrix)
 {
     for (int i = 0; i < 3; ++i)
     {
@@ -107,7 +98,7 @@ void TransposeMatrix(double (&matrix)[3][3])
     }
 }
 
-void MultiplyMatrixWithNumber(double (&matrix)[3][3], const double &number)
+void MultiplyMatrixWithNumber(Matrix3x3 matrix, const double &number)
 {
     for (int row = 0; row < 3; ++row)
     {
@@ -118,7 +109,7 @@ void MultiplyMatrixWithNumber(double (&matrix)[3][3], const double &number)
     }
 }
 
-void InvertMatrix(double (&matrix)[3][3])
+void InvertMatrix(Matrix3x3 matrix)
 {
     double cofactorMatrix[3][3] = {
         {0, 0, 0},
@@ -153,17 +144,20 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        cout << "Invalid amount of arguments!" << endl;
-        cout << "Usage: invert.exe <matrix file>" << endl;
-
+        cout << "Invalid amount of arguments!\n"
+             << "Usage: invert.exe <matrix file>\n";
         return 1;
     }
 
     ifstream input;
 
-    OpenFileForReading(input, argv[1]);
+    if (!OpenFileForReading(input, argv[1]))
+    {
+        cout << "Failed to open " << argv[1] << " for reading!\n";
+        return 1;
+    }
 
-    double matrix[3][3];
+    Matrix3x3 matrix;
 
     ReadMatrixFromFile(input, matrix);
 
