@@ -13,15 +13,43 @@ bool OpenFileForReading(ifstream &file, const string &fileName)
     return file.is_open();
 }
 
-void ReadMatrixFromFile(ifstream &file, Matrix3x3 matrix)
+bool GetMatrixCoefficientsFromFile(ifstream &file, Matrix3x3 matrix)
 {
     for (int row = 0; row < 3; ++row)
     {
         for (int col = 0; col < 3; ++col)
         {
-            file >> matrix[row][col];
+            if (file >> matrix[row][col])
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
+
+    return true;
+}
+
+bool ReadMatrixFromFile(const string &fileName, Matrix3x3 matrix)
+{
+    ifstream input;
+
+    if (!OpenFileForReading(input, fileName))
+    {
+        cout << "Failed to open " << fileName << " for reading!\n";
+        return false;
+    }
+
+    if (!GetMatrixCoefficientsFromFile(input, matrix))
+    {
+        cout << "Can't read matrix from " << fileName << endl;
+        return false;
+    }
+
+    return true;
 }
 
 void PrintMatrix(Matrix3x3 matrix)
@@ -78,22 +106,13 @@ double GetDeterminant(Matrix3x3 matrix)
     return determinant;
 }
 
-void SwapTwo(double &firstOperand, double &secondOperand)
-{
-    double temporaryElement;
-
-    temporaryElement = firstOperand;
-    firstOperand = secondOperand;
-    secondOperand = temporaryElement;
-}
-
 void TransposeMatrix(Matrix3x3 matrix)
 {
     for (int i = 0; i < 3; ++i)
     {
         for (int j = i; j < 3; ++j)
         {
-            SwapTwo(matrix[i][j], matrix[j][i]);
+            swap(matrix[i][j], matrix[j][i]);
         }
     }
 }
@@ -109,14 +128,14 @@ void MultiplyMatrixWithNumber(Matrix3x3 matrix, const double &number)
     }
 }
 
-void InvertMatrix(Matrix3x3 matrix)
+bool InvertMatrix(Matrix3x3 matrix)
 {
-    double cofactorMatrix[3][3] = {
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}
-    };
+    if (abs(GetDeterminant(matrix)) < DBL_EPSILON)
+    {
+        return false;
+    }
 
+    Matrix3x3 cofactorMatrix;
     int sign = 1;
 
     for (int row = 0; row < 3; ++row)
@@ -138,6 +157,8 @@ void InvertMatrix(Matrix3x3 matrix)
             matrix[row][col] = cofactorMatrix[row][col];
         }
     }
+
+    return true;
 }
 
 int main(int argc, char *argv[])
@@ -149,25 +170,20 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    ifstream input;
-
-    if (!OpenFileForReading(input, argv[1]))
-    {
-        cout << "Failed to open " << argv[1] << " for reading!\n";
-        return 1;
-    }
-
     Matrix3x3 matrix;
 
-    ReadMatrixFromFile(input, matrix);
-
-    if (GetDeterminant(matrix) == 0)
+    if (!ReadMatrixFromFile(argv[1], matrix))
     {
-        cout << "Can't invert this matrix. Determinant equals to zero." << endl;
+        cout << "Please, try another file..." << endl;
         return 1;
     }
 
-    InvertMatrix(matrix);
+    if (!InvertMatrix(matrix))
+    {
+        cout << "Determinant equals to zero! Can't invert matrix..." << endl;
+        return 1;
+    }
+
     PrintMatrix(matrix);
 
     return 0;

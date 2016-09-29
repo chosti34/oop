@@ -44,7 +44,7 @@ void ReplaceString(string &str, const string &searchStr, const string &replaceSt
 
 bool ReplaceStringsInFile(ifstream &input, ofstream &output, const string &searchStr, const string &replaceStr)
 {
-    if (searchStr.length() == 0)
+    if (searchStr.empty())
     {
         return false;
     }
