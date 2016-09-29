@@ -117,7 +117,7 @@ void TransposeMatrix(Matrix3x3 matrix)
     }
 }
 
-void MultiplyMatrixWithNumber(Matrix3x3 matrix, const double &number)
+void MultiplyMatrixWithNumber(Matrix3x3 matrix, const double number)
 {
     for (int row = 0; row < 3; ++row)
     {
