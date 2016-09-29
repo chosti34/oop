@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "replace", "replace\replace.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rotatebyte", "rotatebyte\rotatebyte.vcxproj", "{85648C1E-5B58-484C-9AF6-EE70E0C926AC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multimatrix", "multimatrix\multimatrix.vcxproj", "{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "invert", "invert\invert.vcxproj", "{AD3AE5B0-B5BF-4122-9E4B-39ED0E20A319}"
 EndProject
 Global
@@ -35,14 +33,6 @@ Global
 		{85648C1E-5B58-484C-9AF6-EE70E0C926AC}.Release|x64.Build.0 = Release|x64
 		{85648C1E-5B58-484C-9AF6-EE70E0C926AC}.Release|x86.ActiveCfg = Release|Win32
 		{85648C1E-5B58-484C-9AF6-EE70E0C926AC}.Release|x86.Build.0 = Release|Win32
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Debug|x64.ActiveCfg = Debug|x64
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Debug|x64.Build.0 = Debug|x64
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Debug|x86.ActiveCfg = Debug|Win32
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Debug|x86.Build.0 = Debug|Win32
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Release|x64.ActiveCfg = Release|x64
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Release|x64.Build.0 = Release|x64
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Release|x86.ActiveCfg = Release|Win32
-		{FDB67D5B-BB7E-4436-A221-5C5B5BCBD26A}.Release|x86.Build.0 = Release|Win32
 		{AD3AE5B0-B5BF-4122-9E4B-39ED0E20A319}.Debug|x64.ActiveCfg = Debug|x64
 		{AD3AE5B0-B5BF-4122-9E4B-39ED0E20A319}.Debug|x64.Build.0 = Debug|x64
 		{AD3AE5B0-B5BF-4122-9E4B-39ED0E20A319}.Debug|x86.ActiveCfg = Debug|Win32
