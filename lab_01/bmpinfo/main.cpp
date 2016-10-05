@@ -31,8 +31,6 @@ bool OpenBinaryFileForReading(ifstream &file, const string &fileName)
 
 void ReadBmpFileHeader(ifstream &file, BmpFileHeader &fileHeader)
 {
-    int bitsOffsetPosition = 10;
-
     file.read(reinterpret_cast<char*>(&fileHeader.fileType), sizeof(fileHeader.fileType));
     file.read(reinterpret_cast<char*>(&fileHeader.fileSize), sizeof(fileHeader.fileSize));
 }
