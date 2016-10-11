@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     }
 
     ifstream input;
+
     if (!OpenFileForReading(input, argv[1]))
     {
         cout << "Failed to open " << argv[1] << " for reading!" << endl;
@@ -22,6 +23,7 @@ int main(int argc, char *argv[])
     }
 
     ofstream output;
+
     if (!OpenFileForWriting(output, argv[2]))
     {
         cout << "Failed to open " << argv[2] << " for writing!" << endl;
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
     else
     {
         cout << "Incorrect amount of start and finish points!\n"
-             << "Input file must have only 1 A and only 1 B" << endl;
+             << "Input file must have only 1 A and only 1 Bs" << endl;
         return 1;
     }
 

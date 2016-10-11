@@ -52,7 +52,7 @@ bool InitializeLabyrinthFromFile(ifstream &file, Labyrinth &labyrinth)
         }
     }
 
-    if (!labyrinth.haveStart || !labyrinth.haveFinish)
+    if ((!labyrinth.haveStart) || (!labyrinth.haveFinish))
     {
         return false;
     }
@@ -181,6 +181,4 @@ void DrawLabyrinth(ofstream &file, Labyrinth &labyrinth)
         }
         file << std::endl;
     }
-
-    DrawField(labyrinth.field);
 }
