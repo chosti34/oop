@@ -1,22 +1,16 @@
-#include <iostream>
-#include <iterator>
-#include <vector>
-
-void PrintVector(std::vector<int> &vect)
-{
-    for (int i = 0; i < vect.size(); ++i)
-    {
-        std::cout << vect[i] << " ";
-    }
-    std::cout << '\n';
-}
+#include "stdafx.h"
+#include "VectorProcessor.h"
 
 int main()
 {
-    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    std::vector<int> vect(arr, arr + 10);
+    std::vector<double> vect = {1, 2, 3};
 
-    PrintVector(vect);
+    ProcessVector(vect);
+
+    for (size_t i = 0; i < vect.size(); ++i)
+    {
+        std::cout << vect[i] << std::endl;
+    }
 
     return 0;
 }
