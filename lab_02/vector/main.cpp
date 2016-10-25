@@ -3,14 +3,17 @@
 
 int main()
 {
-    std::vector<double> vect = {1, 2, 3};
+    std::string str;
 
+    std::cout << "Enter some numbers separated by space:\n";
+    std::getline(std::cin, str);
+
+    std::vector<double> vect = GetVector(str);
     ProcessVector(vect);
 
-    for (size_t i = 0; i < vect.size(); ++i)
-    {
-        std::cout << vect[i] << std::endl;
-    }
+    std::cout << "Vector has been processed. New vector:\n";
+    PrintVector(std::cout, vect);
+    std::cout << std::endl;
 
     return 0;
 }

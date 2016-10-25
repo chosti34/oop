@@ -11,7 +11,12 @@
 #include <tchar.h>
 
 #include <iostream>
+#include <string>
+#include <iomanip>
+#include <iterator>
 #include <algorithm>
 #include <vector>
+#include <sstream>
+#include <functional>
 
 // TODO: reference additional headers your program requires here

@@ -10,6 +10,15 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <iterator>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+#include <functional>
+
 #define BOOST_TEST_INCLUDED
 #pragma warning (disable:4702) // To disable 4702 warning in boost
 #include <boost/test/unit_test.hpp>
