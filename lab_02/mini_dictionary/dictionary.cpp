@@ -42,6 +42,7 @@ void SaveDictionaryInFile(std::ofstream &file, Dictionary &dictionary)
     {
         file << iterator->first << "|" << iterator->second << '\n';
     }
+    file.close();
 }
 
 Dictionary GetDictionaryFromFile(const std::string &fileName)
