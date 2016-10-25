@@ -4,66 +4,26 @@
 
 int main(int argc, char *argv[])
 {
-    setlocale(LC_ALL, "Russian");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
 
-    if (argc != 2)
+    Dictionary dictionary;
+
+    if (argc == 2)
     {
-        std::cout << "Invalid amount of arguments!\n"
-                  << "Usage: mini_dictionary.exe <dictionary file>" << std::endl;
-        return 1;
+        dictionary = GetDictionaryFromFile(argv[1]);
     }
 
-    std::ifstream input;
+    bool isDictionaryChanged = false;
+    EnterTranslationMainLoop(dictionary, isDictionaryChanged);
 
-    if (!OpenFileForReading(input, argv[1]))
+    if (isDictionaryChanged)
     {
-        std::cout << "Failed to open " << argv[1] << " for reading..." << std::endl;
-        return 1;
+        ProcessChangesInDictionary(dictionary);
     }
-
-    std::map<std::string, std::string> dictionary;
-    InitializeDictionaryFromFile(input, dictionary);
-    input.close();
-
-    bool IsUserWantsToUseDictionary = true;
-    bool IsDictionaryChanged = false;
-
-    std::cout << "Type any word for translation (... for exit):\n";
-
-    while (IsUserWantsToUseDictionary)
+    else
     {
-        std::string word, translation;
-
-        std::cout << "> ";
-        std::getline(std::cin, word);
-
-        if (word == "...")
-        {
-            IsUserWantsToUseDictionary = false;
-        }
-        else if (IsWordInDictionary(word, dictionary))
-        {
-            translation = GetWordTranslationFromDictionary(word, dictionary);
-            std::cout << translation << "\n";
-        }
-        else if (!word.empty())
-        {
-            std::cout << "Unknown word \"" << word << "\". Enter the translation (empty string to skip).\n> ";
-            std::getline(std::cin, translation);
-
-            if ((translation != "...") && (!translation.empty()))
-            {
-                InsertTranslationIntoDictionary(word, translation, dictionary);
-            }
-            else if (translation == "...")
-            {
-                IsUserWantsToUseDictionary = false;
-            }
-            else
-            {
-                std::cout << "Word \"" << word << "\" has been ignored.\n";
-            }
-        }
+        std::cout << "Good bye!" << std::endl;
     }
 
     return 0;

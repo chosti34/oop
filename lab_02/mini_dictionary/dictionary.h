@@ -1,8 +1,16 @@
 #pragma once
 
-void InitializeDictionaryFromFile(std::ifstream &file, std::map<std::string, std::string> &dictionary);
-void InsertTranslationIntoDictionary(const std::string &word, const std::string &translation, std::map<std::string, std::string> &dictionary);
+typedef std::map<std::string, std::string> Dictionary;
 
-bool IsWordInDictionary(const std::string &word, const std::map<std::string, std::string> &dictionary);
+Dictionary GetDictionaryFromFile(const std::string &fileName);
 
-std::string GetWordTranslationFromDictionary(const std::string &word, const std::map<std::string, std::string> &dictionary);
+void InitializeDictionaryFromFile(std::ifstream &file, Dictionary &dictionary);
+void SaveDictionaryInFile(std::ofstream &file, Dictionary &dictionary);
+void InsertTranslationIntoDictionary(const std::string &word, const std::string &translation, Dictionary &dictionary);
+void EnterTranslationMainLoop(Dictionary &dictionary, bool &isDictionaryChanged);
+void ProcessUnknownWordInDictionary(Dictionary &dictionary, const std::string &word, std::string &translation, bool &isDictionaryChanged, bool &isUserWantsToUseDictionary);
+void ProcessChangesInDictionary(Dictionary &dictionary);
+
+bool IsWordInDictionary(const std::string &word, const Dictionary &dictionary);
+
+std::string GetWordTranslationFromDictionary(const std::string &word, const Dictionary &dictionary);
