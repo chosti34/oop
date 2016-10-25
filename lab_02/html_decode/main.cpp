@@ -12,7 +12,7 @@ int main()
         result += HtmlDecode(str) + '\n';
     }
 
-    std::cout << result;
+    std::cout << "Decoded text:\n" << result;
 
     return 0;
 }
