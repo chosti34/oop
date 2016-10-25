@@ -9,11 +9,18 @@ int main()
     std::getline(std::cin, str);
 
     std::vector<double> vect = GetVector(str);
-    ProcessVector(vect);
 
-    std::cout << "Vector has been processed. New vector:\n";
-    PrintVector(std::cout, vect);
-    std::cout << std::endl;
+    if (!vect.empty())
+    {
+        ProcessVector(vect);
+        std::cout << "Vector has been processed. New vector:\n";
+        PrintVector(std::cout, vect);
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "You entered an empty vector..." << std::endl;
+    }
 
     return 0;
 }
