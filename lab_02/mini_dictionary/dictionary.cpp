@@ -89,6 +89,7 @@ void EnterTranslationMainLoop(Dictionary &dictionary, bool &isDictionaryChanged)
 
         std::cout << "> ";
         std::getline(std::cin, word);
+        boost::algorithm::to_lower(word);
 
         if (word == "...")
         {
