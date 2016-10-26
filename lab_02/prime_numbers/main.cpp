@@ -29,6 +29,11 @@ int main(int argc, char *argv[])
         std::cout << "Upper bound must be less than " << upperBoundMaxValue << std::endl;
         return 1;
     }
+    else if (upperBound < 0)
+    {
+        std::cout << "Upper bound can't be negative" << std::endl;
+        return 1;
+    }
 
     std::set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
     PrintSet(std::cout, primeNumbers);
