@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "prime_numbers.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    const int upperBoundMaxValue = 1000000;
+    const int upperBoundMaxValue = 100000000;
 
     if (upperBound > upperBoundMaxValue)
     {
@@ -29,8 +30,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // std::set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
-    // PrintSet(std::cout, primeNumbers);
+    std::set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
+    PrintSet(std::cout, primeNumbers);
+
+    std::cout << "Amount of prime numbers in [2 .. " << upperBound << "]: " << primeNumbers.size() << std::endl;
 
     return 0;
 }
