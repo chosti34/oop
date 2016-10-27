@@ -8,13 +8,16 @@ std::vector<bool> GetPrimeNumbersVector(const int upperBound)
 
     const int minimalPrimeNumber = 2;
 
+    // Решето Эратосфена
     for (int i = minimalPrimeNumber; (i * i) <= upperBound; ++i)
     {
         if (isPrimeNumber[i])
         {
-            for (int j = (i * i); j <= upperBound; j += i)
+            int position = i;
+            while (position <= (upperBound - i))
             {
-                isPrimeNumber[j] = false;
+                position += i;
+                isPrimeNumber[position] = false;
             }
         }
     }

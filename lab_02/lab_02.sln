@@ -19,9 +19,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prime_numbers", "prime_numb
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "prime_numbers_tests", "prime_numbers\prime_numbers_tests\prime_numbers_tests.vcxproj", "{D325829A-E999-4330-B1AE-02BAD11F304D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parse_url", "parse_url\parse_url.vcxproj", "{38FB2171-4C71-42B3-BCE4-6DB7C776BE09}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "url_parse", "url_parse\parse_url.vcxproj", "{38FB2171-4C71-42B3-BCE4-6DB7C776BE09}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "parse_url_tests", "parse_url\parse_url_tests\parse_url_tests.vcxproj", "{42E08931-99F4-4F09-AA1E-A72E1642FDB7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "url_parse_tests", "url_parse\url_parse_tests\parse_url_tests.vcxproj", "{42E08931-99F4-4F09-AA1E-A72E1642FDB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
