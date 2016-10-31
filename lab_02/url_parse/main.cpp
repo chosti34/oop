@@ -1,29 +1,31 @@
 #include "stdafx.h"
+#include "url_parse.h"
 
 int main()
 {
-    setlocale(LC_ALL, "Russian");
+    std::cout << "Input URL: (\"...\" for exit)\n";
 
-    std::string str;
-    std::regex regularExpression("(\\+|-)?[[:digit:]]+");
-
-    while (true)
+    bool isUserWantsToUseApplication = true;
+    while (isUserWantsToUseApplication)
     {
-        std::cout << "Введите число:\n";
-        std::cin >> str;
+        Url url;
+        std::string stringBuffer;
 
-        if (str == "q")
+        std::cout << "> ";
+        std::cin >> stringBuffer;
+
+        if (stringBuffer == "...")
         {
-            break;
+            isUserWantsToUseApplication = false;
         }
-        else if (regex_match(str, regularExpression))
+        else if (ParseURL(stringBuffer, url))
         {
-            std::cout << "Целое число!\n\n";
+            PrintURL(url);
         }
         else
         {
-            std::cout << "Не целое число!\n\n";
-        }
+            std::cout << "Invalid URL!\n";
+        }        
     }
 
     return 0;

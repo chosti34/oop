@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_SUITE(GetMaxElement_function)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(GetVector_function)
-    BOOST_AUTO_TEST_CASE(correct_string)
+    BOOST_AUTO_TEST_CASE(checking_function_with_some_correct_string)
     {
         std::string str = "123 1.3 14.3";
         std::vector<double> vect = GetVector(str);
@@ -40,14 +40,14 @@ BOOST_AUTO_TEST_SUITE(GetVector_function)
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(ProcessVector_function)
-    BOOST_AUTO_TEST_CASE(empty_vector)
+    BOOST_AUTO_TEST_CASE(checking_function_with_empty_vector)
     {
         std::vector<double> vect;
         ProcessVector(vect);
         BOOST_CHECK(vect.empty());
     }
 
-    BOOST_AUTO_TEST_CASE(some_vector)
+    BOOST_AUTO_TEST_CASE(checking_function_with_some_vector)
     {
         std::vector<double> vect = {5, 10, 20};
         ProcessVector(vect);
