@@ -6,13 +6,9 @@ double GetMaxElement(const std::vector<double> &vect)
     return *std::max_element(vect.begin(), vect.end());
 }
 
-std::vector<double> GetVector(const std::string &str)
+std::vector<double> GetVector()
 {
-    std::stringstream strm(str);
-
-    std::vector<double> vect = std::vector<double>(std::istream_iterator<double>(strm), std::istream_iterator<double>());
-
-    return vect;
+    return { std::istream_iterator<double>(std::cin), (std::istream_iterator<double>()) };
 }
 
 void ProcessVector(std::vector<double> &vect)
@@ -24,7 +20,6 @@ void ProcessVector(std::vector<double> &vect)
         {
             std::transform(vect.begin(), vect.end(), vect.begin(), [maxElement](double number) { return number / (maxElement / 2); });
         }
-        std::sort(vect.begin(), vect.end());
     }
 }
 

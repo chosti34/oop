@@ -3,16 +3,14 @@
 
 int main()
 {
-    std::string str;
-
     std::cout << "Enter some numbers separated by space:\n";
-    std::getline(std::cin, str);
 
-    std::vector<double> vect = GetVector(str);
+    std::vector<double> vect = GetVector();
 
     if (!vect.empty())
     {
         ProcessVector(vect);
+        std::sort(vect.begin(), vect.end());
         std::cout << "Vector has been processed. New vector:\n";
         PrintVector(std::cout, vect);
         std::cout << std::endl;
