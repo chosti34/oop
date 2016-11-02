@@ -34,4 +34,11 @@ BOOST_AUTO_TEST_SUITE(HtmlDecode_function)
         std::string decodedStr = HtmlDecode(someStr);
         BOOST_CHECK(StringsAreEqual(decodedStr, "std::cout << \"Hello, World!\""));
     }
+
+    BOOST_AUTO_TEST_CASE(makes_correct_decoded_string_without_repeating_decode)
+    {
+        std::string someStr = "&amp;gt;";
+        std::string decodedStr = HtmlDecode(someStr);
+        BOOST_CHECK(StringsAreEqual(decodedStr, "&gt;"));
+    }
 BOOST_AUTO_TEST_SUITE_END()

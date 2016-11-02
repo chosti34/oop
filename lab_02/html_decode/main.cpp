@@ -3,13 +3,13 @@
 
 int main()
 {
-    std::string str, result;
+    std::string buffer, result;
 
     std::cout << "Enter the text to decode:\n";
 
-    while (std::getline(std::cin, str))
+    while (std::getline(std::cin, buffer))
     {
-        result += HtmlDecode(str) + '\n';
+        result += HtmlDecode(buffer) + '\n';
     }
 
     std::cout << "Decoded text:\n" << result;

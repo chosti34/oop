@@ -1,3 +1,3 @@
 #pragma once
 
-void ReplaceString(std::string &str, const std::string &search, const std::string &replace);
+bool IsStrContains(const std::string &str, const std::string &substr, const size_t position);

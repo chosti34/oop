@@ -1,16 +1,16 @@
 #include "stdafx.h"
-#include "VectorProcessor.h"
+#include "vector_processor.h"
 
 int main()
 {
     std::cout << "Enter some numbers separated by space:\n";
 
-    std::vector<double> vect = GetVector();
+    std::vector<double> vect = GetVector(std::cin);
 
     if (!vect.empty())
     {
         ProcessVector(vect);
-        std::sort(vect.begin(), vect.end());
+        SortVector(vect);
         std::cout << "Vector has been processed. New vector:\n";
         PrintVector(std::cout, vect);
         std::cout << std::endl;

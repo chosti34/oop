@@ -5,7 +5,10 @@
 #include <stdio.h>
 #include <tchar.h>
 
-#include <map>
+#include <iostream>
+#include <string>
+#include <utility>
+#include <array>
 
 #define BOOST_TEST_INCLUDED
 #pragma warning (disable:4702) // To disable 4702 warning in boost

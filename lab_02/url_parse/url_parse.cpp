@@ -34,10 +34,10 @@ int GetDefaultPort(const Protocol &protocol)
 
 bool ParseURL(const std::string &str, Url &url)
 {
-    const boost::regex urlRegularExpression("^(https?|ftp)://([0-9a-z\.-]+)(:?([0-9]+))?(/(.*))?$", boost::regex_constants::icase);
-    boost::smatch matches;
+    std::regex urlRegularExpression("^(https?|ftp)://([0-9a-z\\.-]+)(:?([0-9]+))?(/(.*))?$", std::regex_constants::icase);
+    std::smatch matches;
 
-    if (!boost::regex_match(str, matches, urlRegularExpression))
+    if (!std::regex_match(str, matches, urlRegularExpression))
     {
         return false;
     }
@@ -53,7 +53,7 @@ bool ParseURL(const std::string &str, Url &url)
         url.host = host;
         url.document = document;
 
-        if ((port.empty()) && (port != "0"))
+        if (port.empty())
         {
             url.port = GetDefaultPort(url.protocol);
         }

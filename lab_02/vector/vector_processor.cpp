@@ -1,26 +1,26 @@
 #include "stdafx.h"
-#include "VectorProcessor.h"
+#include "vector_processor.h"
 
-double GetMaxElement(const std::vector<double> &vect)
+std::vector<double> GetVector(std::istream &strm)
 {
-    return *std::max_element(vect.begin(), vect.end());
-}
-
-std::vector<double> GetVector()
-{
-    return { std::istream_iterator<double>(std::cin), (std::istream_iterator<double>()) };
+    return { std::istream_iterator<double>(strm), (std::istream_iterator<double>()) };
 }
 
 void ProcessVector(std::vector<double> &vect)
 {
     if (!vect.empty())
     {
-        double maxElement = GetMaxElement(vect);
+        double maxElement = *std::max_element(vect.begin(), vect.end());
         if (maxElement != 0)
         {
             std::transform(vect.begin(), vect.end(), vect.begin(), [maxElement](double number) { return number / (maxElement / 2); });
         }
     }
+}
+
+void SortVector(std::vector<double> &vect)
+{
+    std::sort(vect.begin(), vect.end());
 }
 
 void PrintVector(std::ostream &output, const std::vector<double> &vect)

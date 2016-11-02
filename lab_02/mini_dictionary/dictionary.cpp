@@ -9,7 +9,7 @@ void InitializeDictionaryFromFile(std::ifstream &file, Dictionary &dictionary)
     while (std::getline(file, str))
     {
         std::vector<std::string> vect;
-        boost::split(vect, str, boost::is_any_of("|"));
+        boost::split(vect, str, boost::is_any_of(":"));
         if (vect.size() == 2)
         {
             std::pair<std::string, std::string> wordPair = make_pair(vect[0], vect[1]);
@@ -40,7 +40,7 @@ void SaveDictionaryInFile(std::ofstream &file, Dictionary &dictionary)
 {
     for (auto iterator = dictionary.begin(); iterator != dictionary.end(); ++iterator)
     {
-        file << iterator->first << "|" << iterator->second << '\n';
+        file << iterator->first << ":" << iterator->second << '\n';
     }
     file.close();
 }
@@ -89,7 +89,6 @@ void EnterTranslationMainLoop(Dictionary &dictionary, bool &isDictionaryChanged)
 
         std::cout << "> ";
         std::getline(std::cin, word);
-        boost::algorithm::to_lower(word);
 
         if (word == "...")
         {
@@ -107,7 +106,7 @@ void EnterTranslationMainLoop(Dictionary &dictionary, bool &isDictionaryChanged)
     }
 }
 
-void ProcessChangesInDictionary(Dictionary &dictionary)
+void ProcessChangesInDictionary(Dictionary &dictionary, const std::string &fileName)
 {
     char choice;
 
@@ -117,7 +116,7 @@ void ProcessChangesInDictionary(Dictionary &dictionary)
     if (tolower(choice) == 'y')
     {
         std::ofstream output;
-        OpenFileForWriting(output, "dictionary.txt");
+        OpenFileForWriting(output, fileName);
         SaveDictionaryInFile(output, dictionary);
         std::cout << "Changes saved. Good bye!" << std::endl;
     }

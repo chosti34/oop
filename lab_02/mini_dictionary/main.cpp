@@ -8,10 +8,16 @@ int main(int argc, char *argv[])
     SetConsoleOutputCP(1251);
 
     Dictionary dictionary;
+    std::string fileName;
 
     if (argc == 2)
     {
-        dictionary = GetDictionaryFromFile(argv[1]);
+        fileName = argv[1];
+        dictionary = GetDictionaryFromFile(fileName);
+    }
+    else
+    {
+        fileName = "dictionary.txt";
     }
 
     bool isDictionaryChanged = false;
@@ -19,7 +25,7 @@ int main(int argc, char *argv[])
 
     if (isDictionaryChanged)
     {
-        ProcessChangesInDictionary(dictionary);
+        ProcessChangesInDictionary(dictionary, fileName);
     }
     else
     {

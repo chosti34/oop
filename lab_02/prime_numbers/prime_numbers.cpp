@@ -3,6 +3,11 @@
 
 std::vector<bool> GetPrimeNumbersVector(const int upperBound)
 {
+    if (upperBound <= 0)
+    {
+        return {};
+    }
+
     std::vector<bool> isPrimeNumber(upperBound + 1, true);
     isPrimeNumber[0] = isPrimeNumber[1] = false;
 
@@ -27,6 +32,11 @@ std::vector<bool> GetPrimeNumbersVector(const int upperBound)
 
 std::set<int> GeneratePrimeNumbersSet(const int upperBound)
 {
+    if (upperBound <= 0)
+    {
+        return {};
+    }
+
     std::vector<bool> isPrimeNumber = GetPrimeNumbersVector(upperBound); // получаем вектор с информацией о простоте чисел
 
     std::set<int> primeNumbers;
@@ -35,7 +45,7 @@ std::set<int> GeneratePrimeNumbersSet(const int upperBound)
     {
         if (isPrimeNumber[i])
         {
-            primeNumbers.insert(i);
+            primeNumbers.emplace_hint(primeNumbers.end(), i);
         }
     }
 
@@ -45,5 +55,4 @@ std::set<int> GeneratePrimeNumbersSet(const int upperBound)
 void PrintSet(std::ostream &output, std::set<int> &container)
 {
     std::copy(container.begin(), container.end(), std::ostream_iterator<int>(output, " "));
-    output << '\n';
 }

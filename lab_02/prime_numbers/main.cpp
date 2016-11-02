@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 
     std::set<int> primeNumbers = GeneratePrimeNumbersSet(upperBound);
     PrintSet(std::cout, primeNumbers);
+    std::cout << '\n';
 
     std::cout << "Amount of prime numbers in [2 .. " << upperBound << "]: " << primeNumbers.size() << std::endl;
 

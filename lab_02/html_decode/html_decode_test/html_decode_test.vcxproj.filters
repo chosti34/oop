@@ -32,13 +32,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\html_processor.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="tests.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\string_processor.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests.cpp">
+    <ClCompile Include="..\html_processor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

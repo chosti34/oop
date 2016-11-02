@@ -36,7 +36,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\url_parse.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -38,10 +38,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="string_processor.cpp">
+    <ClCompile Include="html_processor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="html_processor.cpp">
+    <ClCompile Include="string_processor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
