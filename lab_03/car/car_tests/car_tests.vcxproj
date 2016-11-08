@@ -169,7 +169,7 @@
     <ClCompile Include="..\CarController.cpp" />
     <ClCompile Include="car_tests.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="remote_control_tests.cpp" />
+    <ClCompile Include="car_controller_tests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

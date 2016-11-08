@@ -10,6 +10,12 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include <iostream>
+#include <map>
+#include <string>
+#include <sstream>
+#include <functional>
+
 #include <boost/algorithm/string/replace.hpp>
 
 #define BOOST_TEST_INCLUDED

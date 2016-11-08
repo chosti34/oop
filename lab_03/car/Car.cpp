@@ -9,10 +9,7 @@ CCar::CCar()
     m_gear = Gear::NEUTRAL;
 }
 
-CCar::~CCar()
-{
-    
-}
+CCar::~CCar() {}
 
 bool CCar::IsTurnedOn() const
 {
@@ -43,13 +40,12 @@ bool CCar::TurnOffEngine()
 
 bool CCar::SetGear(int gear)
 {
-    // если машина не заведена или передана неизвестная передача
-    if ((!m_isTurnedOn) || (gear < -1) || (gear > 5))
+    if (((!m_isTurnedOn) && (gear != 0)) || (gear < -1) || (gear > 5))
     {
         return false;
     }
 
-    bool processed = false;
+    bool switched = false;
 
     switch (gear)
     {
@@ -58,33 +54,33 @@ bool CCar::SetGear(int gear)
             if ((m_speed == 0) && ((m_gear == Gear::NEUTRAL) || (m_gear == Gear::FIRST)))
             {
                 m_gear = Gear::REVERSE;
-                processed = true;
+                switched = true;
             }
             break;
         }
         case 0:
         {
             m_gear = Gear::NEUTRAL;
-            processed = true;
+            switched = true;
             break;
         }
         case 1:
         {
-            if ( ((m_gear == Gear::REVERSE) && (m_speed == 0)) || 
-                 ((m_gear == Gear::NEUTRAL) && (m_speed >= 0) && (m_speed <= 30)) ||
-                 ((m_direction == Direction::FORWARD) && (m_speed >= 0) && (m_speed <= 30)) )
+            if (((m_gear == Gear::REVERSE) && (m_speed == 0)) || 
+                ((m_gear == Gear::NEUTRAL) && (m_speed >= 0) && (m_speed <= 30)) ||
+                ((m_direction == Direction::FORWARD) && (m_speed >= 0) && (m_speed <= 30)))
             {
                 m_gear = Gear::FIRST;
-                processed = true;
+                switched = true;
             }
             break;
         }
         case 2:
         {
-            if ((m_speed >= 20) && (m_speed >= 50))
+            if ((m_speed >= 20) && (m_speed <= 50))
             {
                 m_gear = Gear::SECOND;
-                processed = true;
+                switched = true;
             }
             break;
         }
@@ -93,7 +89,7 @@ bool CCar::SetGear(int gear)
             if ((m_speed >= 30) && (m_speed <= 60))
             {
                 m_gear = Gear::THIRD;
-                processed = true;
+                switched = true;
             }
             break;
         }
@@ -102,7 +98,7 @@ bool CCar::SetGear(int gear)
             if ((m_speed >= 40) && (m_speed <= 90))
             {
                 m_gear = Gear::FOURTH;
-                processed = true;
+                switched = true;
             }
             break;
         }
@@ -111,13 +107,13 @@ bool CCar::SetGear(int gear)
             if ((m_speed >= 50) && (m_speed <= 150))
             {
                 m_gear = Gear::FIFTH;
-                processed = true;
+                switched = true;
             }
             break;
         }
     }
 
-    return processed;
+    return switched;
 }
 
 bool CCar::SetSpeed(int speed)
@@ -127,35 +123,35 @@ bool CCar::SetSpeed(int speed)
         return false;
     }
 
-    bool processed = false;
+    bool changed = false;
 
     if ((m_gear == Gear::REVERSE) && (speed >= 0) && (speed <= 20))
     {
         m_speed = speed;
         m_direction = (m_speed == 0) ? (Direction::NONE) : (Direction::BACKWARD);
-        processed = true;
+        changed = true;
     }
-    else if ((m_gear == Gear::NEUTRAL) && (speed < m_speed))
+    else if ((m_gear == Gear::NEUTRAL) && (speed <= m_speed))
     {
         m_speed = speed;
         if (speed == 0)
         {
             m_direction = Direction::NONE;
         }
-        processed = true;
+        changed = true;
     }
-    else if ( ((m_gear == Gear::FIRST) && (speed >= 0) && (speed <= 30)) ||
-              ((m_gear == Gear::SECOND) && (speed >= 20) && (speed <= 50)) ||
-              ((m_gear == Gear::THIRD) && (speed >= 30) && (speed <= 60)) ||
-              ((m_gear == Gear::FOURTH) && (speed >= 40) && (speed <= 90)) ||
-              ((m_gear == Gear::FIFTH) && (speed >= 50) && (speed <= 150)) )
+    else if (((m_gear == Gear::FIRST) && (speed >= 0) && (speed <= 30)) ||
+             ((m_gear == Gear::SECOND) && (speed >= 20) && (speed <= 50)) ||
+             ((m_gear == Gear::THIRD) && (speed >= 30) && (speed <= 60)) ||
+             ((m_gear == Gear::FOURTH) && (speed >= 40) && (speed <= 90)) ||
+             ((m_gear == Gear::FIFTH) && (speed >= 50) && (speed <= 150)))
     {
         m_speed = speed;
         m_direction = Direction::FORWARD;
-        processed = true;
+        changed = true;
     }
 
-    return processed;
+    return changed;
 }
 
 int CCar::GetCurrentSpeed() const
@@ -163,12 +159,27 @@ int CCar::GetCurrentSpeed() const
     return m_speed;
 }
 
-Direction CCar::GetCurrentDirection() const
+std::string CCar::GetCurrentDirection() const
 {
-    return m_direction;
+    std::string direction;
+
+    if (m_direction == Direction::BACKWARD)
+    {
+        direction = "backward";
+    }
+    else if (m_direction == Direction::FORWARD)
+    {
+        direction = "forward";
+    }
+    else if (m_direction == Direction::NONE)
+    {
+        direction = "none";
+    }
+
+    return direction;
 }
 
-Gear CCar::GetCurrentGear() const
+int CCar::GetCurrentGear() const
 {
-    return m_gear;
+    return static_cast<int>(m_gear);
 }

@@ -32,9 +32,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="remote_control_tests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="car_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\CarController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="car_controller_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
