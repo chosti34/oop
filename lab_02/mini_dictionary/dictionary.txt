@@ -3,3 +3,4 @@ asd:cat
 car:машина
 cat:кошка
 dog:собака
+water:вода
