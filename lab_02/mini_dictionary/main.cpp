@@ -13,22 +13,27 @@ int main(int argc, char *argv[])
     if (argc == 2)
     {
         fileName = argv[1];
-        dictionary = GetDictionaryFromFile(fileName);
     }
     else
     {
         fileName = "dictionary.txt";
     }
 
-    bool isDictionaryChanged = false;
-    EnterTranslationMainLoop(dictionary, isDictionaryChanged);
+    dictionary = GetDictionaryFromFile(fileName);
 
-    if (isDictionaryChanged)
+    bool isDictionaryChanged = false;
+    bool isUserWorkedWithDictionaryCorrectly = EnterTranslationMainLoop(dictionary, isDictionaryChanged);
+
+    if ((isDictionaryChanged) && (isUserWorkedWithDictionaryCorrectly))
     {
         ProcessChangesInDictionary(dictionary, fileName);
     }
     else
     {
+        if (!isUserWorkedWithDictionaryCorrectly)
+        {
+            std::cout << "Next time type \"...\" for exit. Changes are not saved.\n";
+        }
         std::cout << "Good bye!" << std::endl;
     }
 

@@ -78,7 +78,7 @@ void ProcessUnknownWordInDictionary(Dictionary &dictionary, const std::string &w
     }
 }
 
-void EnterTranslationMainLoop(Dictionary &dictionary, bool &isDictionaryChanged)
+bool EnterTranslationMainLoop(Dictionary &dictionary, bool &isDictionaryChanged)
 {
     std::cout << "Type any word for translation (... for exit):\n";
 
@@ -97,20 +97,26 @@ void EnterTranslationMainLoop(Dictionary &dictionary, bool &isDictionaryChanged)
         else if (IsWordInDictionary(word, dictionary))
         {
             translation = GetWordTranslationFromDictionary(word, dictionary);
-            std::cout << translation << "\n";
+            std::cout << translation << '\n';
         }
         else if (!word.empty())
         {
             ProcessUnknownWordInDictionary(dictionary, word, translation, isDictionaryChanged, isUserWantsToUseDictionary);
         }
+        else if ((std::cin.eof()) || (std::cin.fail()))
+        {
+            return false;
+        }
     }
+
+    return true;
 }
 
 void ProcessChangesInDictionary(Dictionary &dictionary, const std::string &fileName)
 {
     char choice;
 
-    std::cout << "Dictionary has been changed. Do you want to save changes? (Y/y): ";
+    std::cout << "Dictionary has been changed. Do you want to save changes? (\"Y\" as yes): ";
     std::cin >> choice;
 
     if (tolower(choice) == 'y')
