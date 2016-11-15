@@ -1,15 +1,72 @@
 #include "stdafx.h"
 #include "Car.h"
 
+namespace
+{
+    static std::map<Gear, std::pair<int, int>> ranges = {
+        { Gear::REVERSE, { 0, 20 } },
+        { Gear::NEUTRAL, { 0, 150 } },
+        { Gear::FIRST, { 0, 30 } },
+        { Gear::SECOND, { 20, 50 } },
+        { Gear::THIRD, { 30, 60 } },
+        { Gear::FOURTH, { 40, 90 } },
+        { Gear::FIFTH, { 50, 150 } }
+    };
+
+    bool IsInRange(const int number, const std::pair<int, int> &range)
+    {
+        return (number >= range.first) && (number <= range.second);
+    }
+
+    bool IsSpeedInRangeForGear(Gear gear, const int speed)
+    {
+        return (IsInRange(speed, ranges[gear]));
+    }
+
+    Gear ConvertIntToGear(const int intGear)
+    {
+        Gear gear;
+
+        switch (intGear)
+        {
+        case -1:
+            gear = Gear::REVERSE;
+            break;
+        case 0:
+            gear = Gear::NEUTRAL;
+            break;
+        case 1:
+            gear = Gear::FIRST;
+            break;
+        case 2:
+            gear = Gear::SECOND;
+            break;
+        case 3:
+            gear = Gear::THIRD;
+            break;
+        case 4:
+            gear = Gear::FOURTH;
+            break;
+        case 5:
+            gear = Gear::FIFTH;
+            break;
+        default:
+            gear = Gear::NEUTRAL;
+            break;
+        }
+
+        return gear;
+    }
+}
+
 CCar::CCar()
 {
     m_isTurnedOn = false;
     m_speed = 0;
-    m_direction = Direction::NONE;
     m_gear = Gear::NEUTRAL;
 }
 
-CCar::~CCar() {}
+CCar::~CCar() = default;
 
 bool CCar::IsTurnedOn() const
 {
@@ -29,7 +86,7 @@ bool CCar::TurnOnEngine()
 
 bool CCar::TurnOffEngine()
 {
-    if ((m_isTurnedOn) && (m_direction == Direction::NONE) && (m_gear == Gear::NEUTRAL))
+    if ((m_isTurnedOn) && (m_gear == Gear::NEUTRAL) && (m_speed == 0))
     {
         m_isTurnedOn = false;
         return true;
@@ -40,76 +97,24 @@ bool CCar::TurnOffEngine()
 
 bool CCar::SetGear(int gear)
 {
-    if (((!m_isTurnedOn) && (gear != 0)) || (gear < -1) || (gear > 5))
+    if ((gear < -1) || (gear > 5))
     {
         return false;
     }
 
     bool switched = false;
 
-    switch (gear)
+    if (gear == 0)
     {
-        case -1:
+        m_gear = ConvertIntToGear(gear);
+        switched = true;
+    }
+    else if ((m_isTurnedOn) && (IsSpeedInRangeForGear(ConvertIntToGear(gear), abs(m_speed))))
+    {
+        if (((gear > 0) && (m_speed >= 0)) || ((gear < 0) && (m_speed == 0)))
         {
-            if ((m_speed == 0) && ((m_gear == Gear::NEUTRAL) || (m_gear == Gear::FIRST)))
-            {
-                m_gear = Gear::REVERSE;
-                switched = true;
-            }
-            break;
-        }
-        case 0:
-        {
-            m_gear = Gear::NEUTRAL;
+            m_gear = ConvertIntToGear(gear);
             switched = true;
-            break;
-        }
-        case 1:
-        {
-            if (((m_gear == Gear::REVERSE) && (m_speed == 0)) || 
-                ((m_gear == Gear::NEUTRAL) && (m_speed >= 0) && (m_speed <= 30)) ||
-                ((m_direction == Direction::FORWARD) && (m_speed >= 0) && (m_speed <= 30)))
-            {
-                m_gear = Gear::FIRST;
-                switched = true;
-            }
-            break;
-        }
-        case 2:
-        {
-            if ((m_speed >= 20) && (m_speed <= 50))
-            {
-                m_gear = Gear::SECOND;
-                switched = true;
-            }
-            break;
-        }
-        case 3:
-        {
-            if ((m_speed >= 30) && (m_speed <= 60))
-            {
-                m_gear = Gear::THIRD;
-                switched = true;
-            }
-            break;
-        }
-        case 4:
-        {
-            if ((m_speed >= 40) && (m_speed <= 90))
-            {
-                m_gear = Gear::FOURTH;
-                switched = true;
-            }
-            break;
-        }
-        case 5:
-        {
-            if ((m_speed >= 50) && (m_speed <= 150))
-            {
-                m_gear = Gear::FIFTH;
-                switched = true;
-            }
-            break;
         }
     }
 
@@ -125,29 +130,14 @@ bool CCar::SetSpeed(int speed)
 
     bool changed = false;
 
-    if ((m_gear == Gear::REVERSE) && (speed >= 0) && (speed <= 20))
+    if ((m_gear == Gear::NEUTRAL) && (speed <= m_speed) && (speed >= 0))
     {
         m_speed = speed;
-        m_direction = (m_speed == 0) ? (Direction::NONE) : (Direction::BACKWARD);
         changed = true;
     }
-    else if ((m_gear == Gear::NEUTRAL) && (speed <= m_speed))
+    else if ((m_gear != Gear::NEUTRAL) && (IsSpeedInRangeForGear(m_gear, speed)))
     {
-        m_speed = speed;
-        if (speed == 0)
-        {
-            m_direction = Direction::NONE;
-        }
-        changed = true;
-    }
-    else if (((m_gear == Gear::FIRST) && (speed >= 0) && (speed <= 30)) ||
-             ((m_gear == Gear::SECOND) && (speed >= 20) && (speed <= 50)) ||
-             ((m_gear == Gear::THIRD) && (speed >= 30) && (speed <= 60)) ||
-             ((m_gear == Gear::FOURTH) && (speed >= 40) && (speed <= 90)) ||
-             ((m_gear == Gear::FIFTH) && (speed >= 50) && (speed <= 150)))
-    {
-        m_speed = speed;
-        m_direction = Direction::FORWARD;
+        m_speed = (m_gear == Gear::REVERSE) ? -speed : speed;
         changed = true;
     }
 
@@ -156,24 +146,24 @@ bool CCar::SetSpeed(int speed)
 
 int CCar::GetCurrentSpeed() const
 {
-    return m_speed;
+    return abs(m_speed);
 }
 
-std::string CCar::GetCurrentDirection() const
+Direction CCar::GetCurrentDirection() const
 {
-    std::string direction;
+    Direction direction;
 
-    if (m_direction == Direction::BACKWARD)
+    if (m_speed < 0)
     {
-        direction = "backward";
+        direction = Direction::BACKWARD;
     }
-    else if (m_direction == Direction::FORWARD)
+    else if (m_speed > 0)
     {
-        direction = "forward";
+        direction = Direction::FORWARD;
     }
-    else if (m_direction == Direction::NONE)
+    else
     {
-        direction = "none";
+        direction = Direction::NONE;
     }
 
     return direction;
@@ -182,4 +172,11 @@ std::string CCar::GetCurrentDirection() const
 int CCar::GetCurrentGear() const
 {
     return static_cast<int>(m_gear);
+}
+
+bool operator==(const CCar &left, const CCar &right)
+{
+    return (left.m_isTurnedOn == right.m_isTurnedOn) &&
+        (left.m_speed == right.m_speed) &&
+        (left.m_gear == right.m_gear);
 }

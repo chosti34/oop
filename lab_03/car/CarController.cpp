@@ -2,6 +2,40 @@
 #include "Car.h"
 #include "CarController.h"
 
+namespace
+{
+    std::string DirectionToString(const Direction direction)
+    {
+        std::string directionStr;
+
+        switch (direction)
+        {
+        case Direction::FORWARD:
+        {
+            directionStr = "forward";
+            break;
+        }
+        case Direction::BACKWARD:
+        {
+            directionStr = "backward";
+            break;
+        }
+        case Direction::NONE:
+        {
+            directionStr = "none";
+            break;
+        }
+        default:
+        {
+            directionStr = "<unknown direction>";
+            break;
+        }
+        }
+
+        return directionStr;
+    }
+}
+
 CCarController::CCarController(CCar &car, std::istream &input, std::ostream &output)
     : m_car(car)
     , m_input(input)
@@ -12,7 +46,7 @@ CCarController::CCarController(CCar &car, std::istream &input, std::ostream &out
         { "SetGear", bind(&CCarController::SetGear, this, std::placeholders::_1) },
         { "SetSpeed", bind(&CCarController::SetSpeed, this, std::placeholders::_1) },
         { "Info", bind(&CCarController::Info, this, std::placeholders::_1) }
-    })
+})
 {
 }
 
@@ -32,68 +66,69 @@ bool CCarController::HandleCommand()
         return it->second(strm);
     }
 
+    std::cout << "Unknown command!\n";
     return false;
 }
 
 bool CCarController::EngineOn(std::istream & /*args*/)
 {
-    if (m_car.TurnOnEngine())
+    bool callback = m_car.TurnOnEngine();
+
+    if (callback)
     {
-        m_output << "Car engine is turned on\n";
-        return true;
+        m_output << "Car engine was turned on\n";
+    }
+    else
+    {
+        m_output << "Car engine is already turned on\n";
     }
 
-    return false;
+    return callback;
 }
 
 bool CCarController::EngineOff(std::istream & /*args*/)
 {
-    if (m_car.TurnOffEngine())
+    bool callback = m_car.TurnOffEngine();
+
+    if (callback)
     {
-        m_output << "Car engine is turned off\n";
-        return true;
+        m_output << "Car engine was turned off\n";
+    }
+    else
+    {
+        m_output << "Car engine is already turned off\n";
     }
 
-    return false;
+    return callback;
 }
 
 bool CCarController::Info(std::istream & /*args*/)
 {
-    std::string info;
-
-    if (m_car.IsTurnedOn())
-    {
-        info = "Car engine is on\nGear: " + std::to_string(m_car.GetCurrentGear()) +
-               "\nSpeed: " + std::to_string(m_car.GetCurrentSpeed()) +
-               "\nDirection: " + m_car.GetCurrentDirection() + '\n';
-    }
-    else
-    {
-        info = "Car engine is off\n";
-    }
-
-    m_output << info;
+    m_output << "Engine: " << ((m_car.IsTurnedOn()) ? "on" : "off") << '\n'
+        << "Gear: " << m_car.GetCurrentGear() << '\n'
+        << "Speed: " << m_car.GetCurrentSpeed() << '\n'
+        << "Direction: " << DirectionToString(m_car.GetCurrentDirection()) << '\n';
 
     return true;
- }
+}
 
 bool CCarController::SetGear(std::istream &args)
 {
     int gear;
     args >> gear;
 
-    if (!m_car.SetGear(gear))
+    bool callback = m_car.SetGear(gear);
+
+    if (callback)
     {
-        std::string alert = "Gear doesn't match current car speed or car engine is turned off\n";
-        m_output << alert;
+        m_output << "Gear was switched on " << m_car.GetCurrentGear() << '\n';
     }
     else
     {
-        std::string msg = "Gear was switched on " + std::to_string(gear) + '\n';
-        m_output << msg;
+        m_output << "Can't switch gear on " << gear << '\n';
     }
 
-    return true;
+    return callback;
 }
 
 bool CCarController::SetSpeed(std::istream &args)
@@ -101,11 +136,16 @@ bool CCarController::SetSpeed(std::istream &args)
     int speed;
     args >> speed;
 
-    if (!m_car.SetSpeed(speed))
+    bool callback = m_car.SetSpeed(speed);
+
+    if (callback)
     {
-        std::string alert = "Speed is out of range for current gear or car engine is turned off\n";
-        m_output << alert;
+        m_output << "Speed was changed on " << m_car.GetCurrentSpeed() << '\n';
+    }
+    else
+    {
+        m_output << "Speed is out of range for current gear or car engine is turned off\n";
     }
 
-    return true;
+    return false;
 }

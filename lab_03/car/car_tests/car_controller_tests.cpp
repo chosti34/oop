@@ -32,7 +32,7 @@ struct CarControllerFixture : CarControllerDependencies
         input = stringstream();
         output = stringstream();
         BOOST_CHECK(input << command);
-        BOOST_CHECK(controller.HandleCommand());
+        controller.HandleCommand();
         BOOST_CHECK(input.eof());
         BOOST_CHECK_EQUAL(output.str(), expectedOutput);
     }
@@ -41,27 +41,27 @@ struct CarControllerFixture : CarControllerDependencies
 BOOST_FIXTURE_TEST_SUITE(Car_Controller, CarControllerFixture)
     BOOST_AUTO_TEST_CASE(can_handle_EngineOn_command_if_not_turned_on_yet)
     {
-        VerifyCommandHandling("EngineOn", "Car engine is turned on\n");
+        VerifyCommandHandling("EngineOn", "Car engine was turned on\n");
     }
 
     BOOST_AUTO_TEST_CASE(can_turn_off_car_engine_which_is_on)
     {
         car.TurnOnEngine();
-        VerifyCommandHandling("EngineOff", "Car engine is turned off\n");
+        VerifyCommandHandling("EngineOff", "Car engine was turned off\n");
     }
 
     BOOST_AUTO_TEST_CASE(can_print_car_info)
     {
         // проверяем у машины с незаведённым двигателем
         car.TurnOffEngine();
-        VerifyCommandHandling("Info", "Car engine is off\n");
+        VerifyCommandHandling("Info", "Engine: off\nGear: 0\nSpeed: 0\nDirection: none\n");
 
         // проверяем у машины с заведённым двигателем
         car.TurnOnEngine();
         car.SetGear(1);
         car.SetSpeed(20);
         VerifyCommandHandling(
-            "Info", "Car engine is on\nGear: 1\nSpeed: 20\nDirection: forward\n"
+            "Info", "Engine: on\nGear: 1\nSpeed: 20\nDirection: forward\n"
         );
     }
 
@@ -70,6 +70,19 @@ BOOST_FIXTURE_TEST_SUITE(Car_Controller, CarControllerFixture)
         car.TurnOffEngine();
         VerifyCommandHandling(
             "SetSpeed 30", "Speed is out of range for current gear or car engine is turned off\n"
+        );
+    }
+
+    BOOST_AUTO_TEST_CASE(can_show_info_that_operation_on_car_engine_is_already_done)
+    {
+        car.TurnOnEngine();
+        VerifyCommandHandling(
+            "EngineOn", "Car engine is already turned on\n"
+        );
+
+        car.TurnOffEngine();
+        VerifyCommandHandling(
+            "EngineOff", "Car engine is already turned off\n"
         );
     }
 BOOST_AUTO_TEST_SUITE_END()
