@@ -17,6 +17,10 @@
 #include <sstream>
 #include <math.h>
 #include <iomanip>
+#include <vector>
+#include <memory>
+#include <map>
+#include <functional>
 
 #include <boost/algorithm/string/replace.hpp>
 

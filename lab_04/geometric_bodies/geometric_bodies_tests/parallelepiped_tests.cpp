@@ -10,10 +10,10 @@ struct Parallelepiped_
     const double expectedDepth = 23.8;
     const double expectedHeight = 21.9;
     const double expectedDensity = 8.8;
-    const double expectedVolume = expectedWidth * expectedDepth * expectedHeight;
+    const double expectedVolume = expectedWidth * expectedHeight * expectedDepth;
     const CParallelepiped parallelepiped;
     Parallelepiped_()
-        : parallelepiped(expectedWidth, expectedHeight, expectedDepth, expectedDensity)
+        : parallelepiped(expectedDensity, expectedWidth, expectedHeight, expectedDepth)
     {}
 };
 
@@ -69,8 +69,8 @@ BOOST_FIXTURE_TEST_SUITE(parallelepiped, Parallelepiped_)
 	volume = 15740.844
 	mass = 138519.4272
 	width = 30.2
-	depth = 23.8
 	height = 21.9
+	depth = 23.8
 )";
         BOOST_CHECK_EQUAL(static_cast<const CBody &>(parallelepiped).ToString(), expectedString);
     }

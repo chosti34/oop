@@ -25,6 +25,6 @@ double CCylinder::GetVolume() const
 
 void CCylinder::AppendProperties(std::ostream &strm) const
 {
-    strm << "\tbase radius = " << GetBaseRadius() << std::endl
-         << "\theight = " << GetHeight() << std::endl;
+    strm << "\tbase radius = " << GetBaseRadius() << '\n'
+         << "\theight = " << GetHeight() << '\n';
 }

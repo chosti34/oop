@@ -10,9 +10,10 @@ public:
     CAppController(std::vector<std::shared_ptr<CBody>> &bodies, std::istream &input, std::ostream &output);
     bool HandleCommand();
     
-    void PrintInfoAboutAllBodies(std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &output);
-    void PrintInfoAboutBodyWithMaxMass(std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &output);
-    void PrintInfoAboutBodyWithMinWeightInWater();
+    void PrintInfoAboutAllBodies(const std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &strm) const;
+    void PrintInfoAboutBodyWithMaxMass(const std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &strm) const;
+    void PrintInfoAboutBodyWithMinWeightInWater(const std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &strm) const;
+    double GetBodyWeightInWater(const CBody &body) const;
 
 private:
     bool CreateSphere(std::istream &args);

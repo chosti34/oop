@@ -22,10 +22,12 @@ double CBody::GetMass() const
 std::string CBody::ToString() const
 {
     std::ostringstream strm;
+
     strm << m_type << ":" << std::endl << std::setprecision(10)
-        << "\tdensity = " << GetDensity() << std::endl
-        << "\tvolume = " << GetVolume() << std::endl
-        << "\tmass = " << GetMass() << std::endl;
+        << "\tdensity = " << GetDensity() << '\n'
+        << "\tvolume = " << GetVolume() << '\n'
+        << "\tmass = " << GetMass() << '\n';
     AppendProperties(strm);
+
     return strm.str();
 }

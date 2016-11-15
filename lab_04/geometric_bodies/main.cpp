@@ -16,10 +16,11 @@ int main()
     {
         controller.PrintInfoAboutAllBodies(bodies, std::cout);
         controller.PrintInfoAboutBodyWithMaxMass(bodies, std::cout);
+        controller.PrintInfoAboutBodyWithMinWeightInWater(bodies, std::cout);
     }
     else
     {
-        std::cout << "You didn't enter any body" << std::endl;
+        std::cout << "You haven't entered any geometric bodies..." << std::endl;
     }
 
     return 0;
