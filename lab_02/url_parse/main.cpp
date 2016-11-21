@@ -3,7 +3,7 @@
 
 int main()
 {
-    std::cout << "Input URL: (\"...\" for exit)\n";
+    std::cout << "Enter URL: (\"...\" for exit)\n";
 
     bool doesUserWantsToUseApplication = true;
     while (doesUserWantsToUseApplication)
@@ -14,7 +14,7 @@ int main()
         std::cout << "> ";
         std::cin >> stringBuffer;
 
-        if (stringBuffer == "..." || std::cin.eof() || std::cin.fail())
+        if ((stringBuffer == "...") || (std::cin.eof()) || (std::cin.fail()))
         {
             doesUserWantsToUseApplication = false;
         }
