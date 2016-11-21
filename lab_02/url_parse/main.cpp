@@ -5,8 +5,8 @@ int main()
 {
     std::cout << "Input URL: (\"...\" for exit)\n";
 
-    bool isUserWantsToUseApplication = true;
-    while (isUserWantsToUseApplication)
+    bool doesUserWantsToUseApplication = true;
+    while (doesUserWantsToUseApplication)
     {
         Url url;
         std::string stringBuffer;
@@ -14,9 +14,9 @@ int main()
         std::cout << "> ";
         std::cin >> stringBuffer;
 
-        if (stringBuffer == "...")
+        if (stringBuffer == "..." || std::cin.eof() || std::cin.fail())
         {
-            isUserWantsToUseApplication = false;
+            doesUserWantsToUseApplication = false;
         }
         else if (ParseURL(stringBuffer, url))
         {
