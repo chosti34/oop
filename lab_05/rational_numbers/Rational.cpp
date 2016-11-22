@@ -45,7 +45,15 @@ double CRational::ToDouble() const
     {
         throw std::logic_error("denominator can't be equal to zero");
     }
+
     return static_cast<double>(m_numerator) / m_denominator;
+}
+
+std::pair<int, CRational> CRational::ToCompoundFraction() const
+{
+    int integer = static_cast<int>(ToDouble());
+    int numerator = m_numerator - m_denominator * integer;
+    return {integer, CRational(numerator, m_denominator)};
 }
 
 void CRational::Normalize()
@@ -53,6 +61,126 @@ void CRational::Normalize()
     const int gcd = GCD(abs(m_numerator), m_denominator);
     m_numerator /= gcd;
     m_denominator /= gcd;
+}
+
+CRational const CRational::operator +() const
+{
+    return CRational(m_numerator, m_denominator);
+}
+
+CRational const CRational::operator -() const
+{
+    return CRational(-m_numerator, m_denominator);
+}
+
+CRational& CRational::operator +=(const CRational &rightValue)
+{
+    *this = *this + rightValue;
+    return *this;
+}
+
+CRational& CRational::operator -=(const CRational &rightValue)
+{
+    *this = *this - rightValue;
+    return *this;
+}
+
+CRational& CRational::operator *=(const CRational &rightValue)
+{
+    *this = *this * rightValue;
+    return *this;
+}
+
+CRational& CRational::operator /=(const CRational &rightValue)
+{
+    *this = *this / rightValue;
+    return *this;
+}
+
+CRational const operator +(const CRational &leftValue, const CRational &rightValue)
+{
+    return CRational(
+        leftValue.GetNumerator() * rightValue.GetDenominator() + rightValue.GetNumerator() * leftValue.GetDenominator(),
+        leftValue.GetDenominator() * rightValue.GetDenominator()
+    );
+}
+
+CRational const operator -(const CRational &leftValue, const CRational &rightValue)
+{
+    return CRational(
+        leftValue.GetNumerator() * rightValue.GetDenominator() - rightValue.GetNumerator() * leftValue.GetDenominator(),
+        leftValue.GetDenominator() * rightValue.GetDenominator()
+    );
+}
+
+CRational const operator *(const CRational &leftValue, const CRational &rightValue)
+{
+    return CRational(
+        leftValue.GetNumerator() * rightValue.GetNumerator(),
+        leftValue.GetDenominator() * rightValue.GetDenominator()
+    );
+}
+
+CRational const operator /(const CRational &leftValue, const CRational &rightValue)
+{
+    return CRational(
+        leftValue.GetNumerator() * rightValue.GetDenominator(),
+        leftValue.GetDenominator() * rightValue.GetNumerator()
+    );
+}
+
+bool const operator ==(const CRational &leftValue, const CRational &rightValue)
+{
+    return (leftValue.GetNumerator() == rightValue.GetNumerator()) &&
+           (leftValue.GetDenominator() == rightValue.GetDenominator());
+}
+
+bool const operator !=(const CRational &leftValue, const CRational &rightValue)
+{
+    return !(leftValue == rightValue);
+}
+
+bool const operator >(const CRational &leftValue, const CRational &rightValue)
+{
+    return (leftValue.ToDouble() > rightValue.ToDouble());
+}
+
+bool const operator <= (const CRational &leftValue, const CRational &rightValue)
+{
+    return !(leftValue > rightValue);
+}
+
+bool const operator <(const CRational &leftValue, const CRational &rightValue)
+{
+    return (leftValue.ToDouble() < rightValue.ToDouble());
+}
+
+bool const operator >=(const CRational &leftValue, const CRational &rightValue)
+{
+    return !(leftValue < rightValue);
+}
+
+std::ostream& operator <<(std::ostream &strm, const CRational &number)
+{
+    strm << number.GetNumerator() << '/' << number.GetDenominator();
+    return strm;
+}
+
+std::istream& operator >>(std::istream &strm, CRational &number)
+{
+    int numerator;
+    int denominator;
+
+    if ((strm >> numerator) && (strm.get() == '/') && (strm >> denominator))
+    {
+        number = CRational(numerator, denominator);
+    }
+    else
+    {
+        strm.setstate(std::ios_base::failbit | strm.rdstate());
+    }
+
+    return strm;
 }
 
 unsigned GCD(unsigned a, unsigned b)

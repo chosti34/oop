@@ -14,5 +14,6 @@
 #include <iomanip>
 #include <utility>
 #include <stdexcept>
+#include <climits>
 
 // TODO: reference additional headers your program requires here
