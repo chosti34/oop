@@ -27,7 +27,7 @@ void VerifyRational(const CRational &rationalNumber, const int expectedNumerator
     BOOST_CHECK_EQUAL(rationalNumber.GetDenominator(), expectedDenominator);
 }
 
-BOOST_AUTO_TEST_SUITE(Rational_number_tests)
+BOOST_AUTO_TEST_SUITE(Rational_number)
 
     BOOST_AUTO_TEST_CASE(equals_to_zero_by_default)
     {
