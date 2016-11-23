@@ -7,23 +7,23 @@ struct CarFixture
 };
 
 BOOST_FIXTURE_TEST_SUITE(Car, CarFixture)
-    BOOST_AUTO_TEST_SUITE(when_this_class_constructed)
-        BOOST_AUTO_TEST_CASE(engine_is_turned_off_by_default)
+    BOOST_AUTO_TEST_SUITE(when_constructed)
+        BOOST_AUTO_TEST_CASE(engine_is_turned_off)
         {
             BOOST_CHECK(!car.IsTurnedOn());
         }
 
-        BOOST_AUTO_TEST_CASE(gear_is_neutral_by_default)
+        BOOST_AUTO_TEST_CASE(gear_is_neutral)
         {
             BOOST_CHECK(car.GetCurrentGear() == 0);
         }
 
-        BOOST_AUTO_TEST_CASE(speed_equals_to_zero_by_default)
+        BOOST_AUTO_TEST_CASE(speed_equals_to_zero)
         {
             BOOST_CHECK(car.GetCurrentSpeed() == 0);
         }
 
-        BOOST_AUTO_TEST_CASE(does_not_have_any_direction_by_default)
+        BOOST_AUTO_TEST_CASE(does_not_have_any_direction)
         {
             BOOST_CHECK(car.GetCurrentDirection() == Direction::NONE);
         }
