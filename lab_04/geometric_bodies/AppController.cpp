@@ -4,6 +4,7 @@
 #include "Parallelepiped.h"
 #include "Cone.h"
 #include "Cylinder.h"
+#include "Compound.h"
 #include "AppController.h"
 
 CAppController::CAppController(std::vector<std::shared_ptr<CBody>> &bodies, std::istream &input, std::ostream &output)
@@ -14,7 +15,8 @@ CAppController::CAppController(std::vector<std::shared_ptr<CBody>> &bodies, std:
         { "CreateSphere", std::bind(&CAppController::CreateSphere, this, std::placeholders::_1) },
         { "CreateParallelepiped", std::bind(&CAppController::CreateParallelepiped, this, std::placeholders::_1) },
         { "CreateCone", std::bind(&CAppController::CreateCone, this, std::placeholders::_1) },
-        { "CreateCylinder", std::bind(&CAppController::CreateCylinder, this, std::placeholders::_1) }
+        { "CreateCylinder", std::bind(&CAppController::CreateCylinder, this, std::placeholders::_1) },
+        { "CreateCompound", std::bind(&CAppController::CreateCompound, this, std::placeholders::_1) }
     })
 {
 }
@@ -134,6 +136,8 @@ bool CAppController::CreateCylinder(std::istream &args)
 {
     bool created = false;
 
+    CCylinder cylinder(1, 2, 3);
+
     double parametr;
     std::vector<double> parametrs;
     while (args >> parametr)
@@ -155,6 +159,21 @@ bool CAppController::CreateCylinder(std::istream &args)
     }
 
     return created;
+}
+
+bool CAppController::CreateCompound(std::istream &args)
+{
+    std::string str;
+
+    CCompound compoundBody();
+
+    while (std::getline(std::cin, str))
+    {
+        // 1) Сформировать CBody
+        // 2) Запушить в вектор
+    }
+
+    return true;
 }
 
 void CAppController::PrintInfoAboutAllBodies(const std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &strm) const

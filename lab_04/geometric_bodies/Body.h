@@ -14,8 +14,8 @@ public:
 
 protected:
     virtual void AppendProperties(std::ostream &strm) const = 0;
+    double m_density;
 
 private:
-    double m_density;
     std::string m_type;
 };

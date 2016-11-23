@@ -39,19 +39,19 @@ BOOST_FIXTURE_TEST_SUITE(Cone, Cone_)
     // имеет плотность
     BOOST_AUTO_TEST_CASE(has_a_density)
     {
-        BOOST_CHECK_EQUAL(static_cast<const CBody &>(cone).GetDensity(), expectedDensity);
+        BOOST_CHECK_EQUAL(cone.GetDensity(), expectedDensity);
     }
 
     // имеет объем
     BOOST_AUTO_TEST_CASE(has_a_volume)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(cone).GetVolume(), expectedVolume, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(cone.GetVolume(), expectedVolume, 1e-7);
     }
 
     // имеет массу
     BOOST_AUTO_TEST_CASE(has_a_mass)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(cone).GetMass(), expectedVolume * expectedDensity, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(cone.GetMass(), expectedVolume * expectedDensity, 1e-7);
     }
 
     // имеет строковое представление
@@ -65,6 +65,6 @@ BOOST_FIXTURE_TEST_SUITE(Cone, Cone_)
 	height = 11.1
 )";
 
-    BOOST_CHECK_EQUAL(static_cast<const CBody &>(cone).ToString(), expectedString);
+        BOOST_CHECK_EQUAL(cone.ToString(), expectedString);
     }
 BOOST_AUTO_TEST_SUITE_END()

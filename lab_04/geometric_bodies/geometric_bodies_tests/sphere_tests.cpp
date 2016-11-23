@@ -32,19 +32,19 @@ BOOST_FIXTURE_TEST_SUITE(Sphere, Sphere_)
     // имеет плотность
     BOOST_AUTO_TEST_CASE(has_a_density)
     {
-        BOOST_CHECK_EQUAL(static_cast<const CBody &>(sphere).GetDensity(), expectedDensity);
+        BOOST_CHECK_EQUAL(sphere.GetDensity(), expectedDensity);
     }
 
     // имеет объем
     BOOST_AUTO_TEST_CASE(has_a_volume)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(sphere).GetVolume(), expectedVolume, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(sphere.GetVolume(), expectedVolume, 1e-7);
     }
 
     // имеет массу
     BOOST_AUTO_TEST_CASE(has_a_mass)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(sphere).GetMass(), expectedVolume * expectedDensity, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(sphere.GetMass(), expectedVolume * expectedDensity, 1e-7);
     }
 
     // имеет строковое представление
@@ -57,6 +57,6 @@ BOOST_FIXTURE_TEST_SUITE(Sphere, Sphere_)
 	radius = 42.8
 )";
 
-        BOOST_CHECK_EQUAL(static_cast<const CBody &>(sphere).ToString(), expectedString);
+        BOOST_CHECK_EQUAL(sphere.ToString(), expectedString);
     }
 BOOST_AUTO_TEST_SUITE_END()

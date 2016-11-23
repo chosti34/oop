@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="AppController.h" />
     <ClInclude Include="Body.h" />
+    <ClInclude Include="Compound.h" />
     <ClInclude Include="Cone.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Parallelepiped.h" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClCompile Include="AppController.cpp" />
     <ClCompile Include="Body.cpp" />
+    <ClCompile Include="Compound.cpp" />
     <ClCompile Include="Cone.cpp" />
     <ClCompile Include="Cylinder.cpp" />
     <ClCompile Include="main.cpp" />

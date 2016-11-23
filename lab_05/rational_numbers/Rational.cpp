@@ -2,9 +2,9 @@
 #include "Rational.h"
 
 CRational::CRational()
+    : m_numerator(0)
+    , m_denominator(1)
 {
-    m_numerator = 0;
-    m_denominator = 1;
 }
 
 CRational::CRational(int numerator, int denominator)

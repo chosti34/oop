@@ -46,19 +46,19 @@ BOOST_FIXTURE_TEST_SUITE(parallelepiped, Parallelepiped_)
     // имеет плотность
     BOOST_AUTO_TEST_CASE(has_a_density)
     {
-        BOOST_CHECK_EQUAL(static_cast<const CBody &>(parallelepiped).GetDensity(), expectedDensity);
+        BOOST_CHECK_EQUAL(parallelepiped.GetDensity(), expectedDensity);
     }
 
     // имеет объём
     BOOST_AUTO_TEST_CASE(has_a_volume)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(parallelepiped).GetVolume(), expectedVolume, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(parallelepiped.GetVolume(), expectedVolume, 1e-7);
     }
 
     // имеет массу
     BOOST_AUTO_TEST_CASE(has_a_mass)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(parallelepiped).GetMass(), expectedDensity * expectedVolume, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(parallelepiped.GetMass(), expectedDensity * expectedVolume, 1e-7);
     }
 
     // имеет строковое представление
@@ -72,6 +72,6 @@ BOOST_FIXTURE_TEST_SUITE(parallelepiped, Parallelepiped_)
 	height = 21.9
 	depth = 23.8
 )";
-        BOOST_CHECK_EQUAL(static_cast<const CBody &>(parallelepiped).ToString(), expectedString);
+        BOOST_CHECK_EQUAL(parallelepiped.ToString(), expectedString);
     }
 BOOST_AUTO_TEST_SUITE_END()

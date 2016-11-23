@@ -40,19 +40,19 @@ BOOST_FIXTURE_TEST_SUITE(Cylinder, Cylinder_)
     // имеет плотность
     BOOST_AUTO_TEST_CASE(has_a_density)
     {
-        BOOST_CHECK_EQUAL(static_cast<const CBody &>(cylinder).GetDensity(), expectedDensity);
+        BOOST_CHECK_EQUAL(cylinder.GetDensity(), expectedDensity);
     }
 
     // имеет объем
     BOOST_AUTO_TEST_CASE(has_a_volume)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(cylinder).GetVolume(), expectedVolume, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(cylinder.GetVolume(), expectedVolume, 1e-7);
     }
 
     // имеет массу
     BOOST_AUTO_TEST_CASE(has_a_mass)
     {
-        BOOST_CHECK_CLOSE_FRACTION(static_cast<const CBody &>(cylinder).GetMass(), expectedVolume * expectedDensity, 1e-7);
+        BOOST_CHECK_CLOSE_FRACTION(cylinder.GetMass(), expectedVolume * expectedDensity, 1e-7);
     }
 
     // имеет строковое представление
@@ -65,6 +65,6 @@ BOOST_FIXTURE_TEST_SUITE(Cylinder, Cylinder_)
 	base radius = 10.1
 	height = 12.3
 )";
-        BOOST_CHECK_EQUAL(static_cast<const CBody &>(cylinder).ToString(), expectedString);
+        BOOST_CHECK_EQUAL(cylinder.ToString(), expectedString);
     }
 BOOST_AUTO_TEST_SUITE_END()
