@@ -9,7 +9,10 @@ int main()
     while ((!std::cin.eof()) && (!std::cin.fail()))
     {
         std::cout << "> ";
-        controller.HandleCommand();
+        if (!controller.HandleCommand())
+        {
+            break;
+        }
     }
 
     if (!bodies.empty())

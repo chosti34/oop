@@ -7,7 +7,7 @@ public:
     virtual ~CBody();
 
     double GetDensity() const;
-    double GetMass() const;
+    virtual double GetMass() const;
     virtual double GetVolume() const = 0;
 
     std::string ToString() const;

@@ -7,13 +7,13 @@ class CCompound final : public CBody
 public:
     CCompound();
 
-    bool AddChildBody(const CBody &body);
-    double GetVolume() const;
+    bool AddChildBody(const std::shared_ptr<CBody> &body);
+    double GetVolume() const override;
+    double GetMass() const override;
 
 protected:
-    void AppendProperties(std::ostream &strm) const;
+    void AppendProperties(std::ostream &strm) const override;
 
 private:
     std::vector<std::shared_ptr<CBody>> m_elements;
-
 };

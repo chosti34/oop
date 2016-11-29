@@ -65,5 +65,11 @@
     <ClCompile Include="controller_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Compound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="compound_tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

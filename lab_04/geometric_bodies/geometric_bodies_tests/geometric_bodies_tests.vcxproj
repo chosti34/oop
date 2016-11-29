@@ -169,10 +169,12 @@
   <ItemGroup>
     <ClCompile Include="..\AppController.cpp" />
     <ClCompile Include="..\Body.cpp" />
+    <ClCompile Include="..\Compound.cpp" />
     <ClCompile Include="..\Cone.cpp" />
     <ClCompile Include="..\Cylinder.cpp" />
     <ClCompile Include="..\Parallelepiped.cpp" />
     <ClCompile Include="..\Sphere.cpp" />
+    <ClCompile Include="compound_tests.cpp" />
     <ClCompile Include="cone_tests.cpp" />
     <ClCompile Include="controller_tests.cpp" />
     <ClCompile Include="cylinder_tests.cpp" />

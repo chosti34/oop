@@ -107,10 +107,7 @@ CRational const operator +(const CRational &leftValue, const CRational &rightVal
 
 CRational const operator -(const CRational &leftValue, const CRational &rightValue)
 {
-    return CRational(
-        leftValue.GetNumerator() * rightValue.GetDenominator() - rightValue.GetNumerator() * leftValue.GetDenominator(),
-        leftValue.GetDenominator() * rightValue.GetDenominator()
-    );
+    return leftValue + -rightValue;
 }
 
 CRational const operator *(const CRational &leftValue, const CRational &rightValue)

@@ -7,6 +7,10 @@ CParallelepiped::CParallelepiped(double density, double width, double height, do
     , m_height(height)
     , m_depth(depth)
 {
+    if ((m_density < 0) || (m_width < 0) || (m_height < 0) || (m_depth < 0))
+    {
+        throw std::invalid_argument("Density, width, height and depth can't be negative...");
+    }
 }
 
 CParallelepiped::~CParallelepiped()

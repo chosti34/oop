@@ -27,6 +27,10 @@ bool CAppController::HandleCommand()
 
     if ((!std::getline(m_input, commandLine)) || (commandLine.empty()))
     {
+        return true;
+    }
+    else if (commandLine == "...")
+    {
         return false;
     }
 
@@ -35,20 +39,25 @@ bool CAppController::HandleCommand()
     std::string action;
     strm >> action;
 
-    bool handled = false;
     auto it = m_actionMap.find(action);
 
     if (it != m_actionMap.end())
     {
-        it->second(strm);
-        handled = true;
+        try
+        {
+            it->second(strm);
+        }
+        catch (const std::invalid_argument &error)
+        {
+            m_output << error.what() << '\n';
+        }
     }
     else
     {
-        std::cout << "Unknown command!\n";
+        m_output << "Unknown command!\n";
     }
 
-    return handled;
+    return true;
 }
 
 bool CAppController::CreateSphere(std::istream &args)
@@ -121,7 +130,7 @@ bool CAppController::CreateCone(std::istream &args)
         std::shared_ptr<CBody> ptr = std::make_shared<CCone>(parametrs.at(0), parametrs.at(1), parametrs.at(2));
         m_bodies.push_back(ptr);
         created = true;
-        m_output << "Cone created\n";
+        m_output << "Cone created!\n";
     }
     else
     {
@@ -136,8 +145,6 @@ bool CAppController::CreateCylinder(std::istream &args)
 {
     bool created = false;
 
-    CCylinder cylinder(1, 2, 3);
-
     double parametr;
     std::vector<double> parametrs;
     while (args >> parametr)
@@ -150,7 +157,7 @@ bool CAppController::CreateCylinder(std::istream &args)
         std::shared_ptr<CBody> ptr = std::make_shared<CCylinder>(parametrs.at(0), parametrs.at(1), parametrs.at(2));
         m_bodies.push_back(ptr);
         created = true;
-        m_output << "Cylinder created\n";
+        m_output << "Cylinder created!\n";
     }
     else
     {
@@ -163,17 +170,35 @@ bool CAppController::CreateCylinder(std::istream &args)
 
 bool CAppController::CreateCompound(std::istream &args)
 {
-    std::string str;
+    std::vector<std::shared_ptr<CBody>> compoundBodyElements;
+    CAppController compoundBodiesController(compoundBodyElements, m_input, m_output);
+    std::shared_ptr<CCompound> compoundBody = std::make_shared<CCompound>();
 
-    CCompound compoundBody();
+    m_output << "Creating compound body (\"...\" for quit creating)\n";
 
-    while (std::getline(std::cin, str))
+    while ((!m_input.eof()) || (!m_input.fail()))
     {
-        // 1) Сформировать CBody
-        // 2) Запушить в вектор
+        m_output << "> ";
+        if (!compoundBodiesController.HandleCommand())
+        {
+            break;
+        }
     }
 
-    return true;
+    m_output << "Qutting create of compound body\n";
+
+    if (!compoundBodyElements.empty())
+    {
+        for (auto &element : compoundBodyElements)
+        {
+            compoundBody->AddChildBody(element);
+        }
+
+        m_bodies.push_back(compoundBody);
+        return true;
+    }
+
+    return false;
 }
 
 void CAppController::PrintInfoAboutAllBodies(const std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &strm) const
@@ -191,45 +216,29 @@ void CAppController::PrintInfoAboutBodyWithMaxMass(const std::vector<std::shared
 {
     if (!bodies.empty())
     {
-        std::shared_ptr<CBody> maxMassBody = bodies.at(0);
-
-        for (const auto &body : bodies)
+        auto hasBiggerMass = [] (const std::shared_ptr<CBody> &first, const std::shared_ptr<CBody> &second)
         {
-            if (body->GetMass() > maxMassBody->GetMass())
-            {
-                maxMassBody = body;
-            }
-        }
+            return (first->GetMass() < second->GetMass());
+        };
 
-        strm << "Body with max mass is " << maxMassBody->ToString() << '\n';
+        auto bodyWithMaxMass = *std::max_element(bodies.begin(), bodies.end(), hasBiggerMass);
+
+        strm << "Body with max mass is " << bodyWithMaxMass->ToString() << '\n';
     }
 }
 
 void CAppController::PrintInfoAboutBodyWithMinWeightInWater(const std::vector<std::shared_ptr<CBody>> &bodies, std::ostream &strm) const
 {
-    const double waterDensity = 1000;
-
     if (!bodies.empty())
     {
-        std::shared_ptr<CBody> minDensityBody = bodies.at(0);
-        double minWeightInWater = GetBodyWeightInWater(*minDensityBody);
-
-        if (minWeightInWater < 0)
+        auto hasLessWeight = [this] (const std::shared_ptr<CBody> &first, const std::shared_ptr<CBody> &second)
         {
-            minWeightInWater = 0;
-        }
+            return (GetBodyWeightInWater(*first) < GetBodyWeightInWater(*second));
+        };
 
-        for (const auto &body : bodies)
-        {
-            if (abs(GetBodyWeightInWater(*body)) < minWeightInWater)
-            {
-                minWeightInWater = GetBodyWeightInWater(*body);
-                minDensityBody = body;
-            }
-        }
+        auto bodyWithMinWeightInWater = *std::min_element(bodies.begin(), bodies.end(), hasLessWeight);
 
-        strm << "Body with min weight in water is " << minDensityBody->ToString() << '\n'
-             << "\tWeight in water: " << minWeightInWater << '\n';
+        strm << "Body with min weight in water is " << bodyWithMinWeightInWater->ToString() << '\n';
     }
 }
 
