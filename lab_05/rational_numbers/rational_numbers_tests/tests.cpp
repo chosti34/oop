@@ -596,6 +596,9 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
             BOOST_CHECK(CRational(-10, 1) > -11);
             BOOST_CHECK(CRational() > -1);
 
+            BOOST_CHECK(!(1 > CRational(2)));
+            BOOST_CHECK(!(-2 > CRational()));
+
             BOOST_CHECK(1 > CRational());
             BOOST_CHECK(-10 > CRational(-110, 1));
         }
@@ -621,6 +624,9 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
             BOOST_CHECK(CRational() <= 1);
             BOOST_CHECK(CRational(-10, 1) <= -10);
             BOOST_CHECK(CRational() <= 0);
+
+            BOOST_CHECK(!(1 <= CRational()));
+            BOOST_CHECK(!(-2 <= CRational(-10, 2)));
 
             BOOST_CHECK(1 <= CRational(1));
             BOOST_CHECK(10 <= CRational(110, 1));
@@ -648,6 +654,9 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
             BOOST_CHECK(CRational(-10, 1) < -9);
             BOOST_CHECK(CRational(-2) < -1);
 
+            BOOST_CHECK(!(-1 < CRational(-2)));
+            BOOST_CHECK(!(-2 < CRational(-5, 2)));
+
             BOOST_CHECK(1 < CRational(2));
             BOOST_CHECK(10 < CRational(110, 1));
         }
@@ -673,6 +682,9 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
             BOOST_CHECK(CRational(2) >= 1);
             BOOST_CHECK(CRational(-10, -1) >= -9);
             BOOST_CHECK(CRational() >= -1);
+
+            BOOST_CHECK(!(-1 >= CRational()));
+            BOOST_CHECK(!(-2 >= CRational(-1, 2)));
 
             BOOST_CHECK(1 >= CRational());
             BOOST_CHECK(10 >= CRational(-1, 1));
