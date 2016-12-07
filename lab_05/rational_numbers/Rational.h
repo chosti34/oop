@@ -3,13 +3,8 @@
 class CRational final
 {
 public:
-    // Конструирует рациональное число, равное нулю (0 / 1)
-    CRational();
-
     // Конструирует рациональное число, равное (numerator / denominator)
-    CRational(int numerator, int denominator = 1);
-
-    ~CRational();
+    CRational(int numerator = 0, int denominator = 1);
 
     int GetNumerator() const;
     int GetDenominator() const;
@@ -38,12 +33,12 @@ CRational const operator -(const CRational &leftValue, const CRational &rightVal
 CRational const operator *(const CRational &leftValue, const CRational &rightValue);
 CRational const operator /(const CRational &leftValue, const CRational &rightValue);
 
-bool const operator ==(const CRational &leftValue, const CRational &rightValue);
-bool const operator !=(const CRational &leftValue, const CRational &rightValue);
-bool const operator >(const CRational &leftValue, const CRational &rightValue);
-bool const operator >=(const CRational &leftValue, const CRational &rightValue);
-bool const operator <(const CRational &leftValue, const CRational &rightValue);
-bool const operator <=(const CRational &leftValue, const CRational &rightValue);
+bool operator ==(const CRational &leftValue, const CRational &rightValue);
+bool operator !=(const CRational &leftValue, const CRational &rightValue);
+bool operator >(const CRational &leftValue, const CRational &rightValue);
+bool operator >=(const CRational &leftValue, const CRational &rightValue);
+bool operator <(const CRational &leftValue, const CRational &rightValue);
+bool operator <=(const CRational &leftValue, const CRational &rightValue);
 
 std::ostream& operator <<(std::ostream &strm, const CRational &number);
 std::istream& operator >>(std::istream &strm, CRational &number);

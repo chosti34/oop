@@ -1,19 +1,13 @@
 #include "stdafx.h"
 #include "Rational.h"
 
-CRational::CRational()
-    : m_numerator(0)
-    , m_denominator(1)
-{
-}
-
 CRational::CRational(int numerator, int denominator)
     : m_numerator(numerator)
     , m_denominator(denominator)
 {
     if (denominator == 0)
     {
-        throw std::invalid_argument("denominator can't be equal to zero");
+        throw std::invalid_argument("denominator can't equal to zero");
     }
 
     if (denominator < 0)
@@ -23,10 +17,6 @@ CRational::CRational(int numerator, int denominator)
     }
 
     Normalize();
-}
-
-CRational::~CRational()
-{
 }
 
 int CRational::GetNumerator() const
@@ -51,7 +41,7 @@ double CRational::ToDouble() const
 
 std::pair<int, CRational> CRational::ToCompoundFraction() const
 {
-    int integer = static_cast<int>(ToDouble());
+    int integer = m_numerator / m_denominator;
     int numerator = m_numerator - m_denominator * integer;
     return {integer, CRational(numerator, m_denominator)};
 }
@@ -126,33 +116,33 @@ CRational const operator /(const CRational &leftValue, const CRational &rightVal
     );
 }
 
-bool const operator ==(const CRational &leftValue, const CRational &rightValue)
+bool operator ==(const CRational &leftValue, const CRational &rightValue)
 {
     return (leftValue.GetNumerator() == rightValue.GetNumerator()) &&
            (leftValue.GetDenominator() == rightValue.GetDenominator());
 }
 
-bool const operator !=(const CRational &leftValue, const CRational &rightValue)
+bool operator !=(const CRational &leftValue, const CRational &rightValue)
 {
     return !(leftValue == rightValue);
 }
 
-bool const operator >(const CRational &leftValue, const CRational &rightValue)
+bool operator >(const CRational &leftValue, const CRational &rightValue)
 {
     return (leftValue.ToDouble() > rightValue.ToDouble());
 }
 
-bool const operator <= (const CRational &leftValue, const CRational &rightValue)
+bool operator <= (const CRational &leftValue, const CRational &rightValue)
 {
     return !(leftValue > rightValue);
 }
 
-bool const operator <(const CRational &leftValue, const CRational &rightValue)
+bool operator <(const CRational &leftValue, const CRational &rightValue)
 {
     return (leftValue.ToDouble() < rightValue.ToDouble());
 }
 
-bool const operator >=(const CRational &leftValue, const CRational &rightValue)
+bool operator >=(const CRational &leftValue, const CRational &rightValue)
 {
     return !(leftValue < rightValue);
 }
