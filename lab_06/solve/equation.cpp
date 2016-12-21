@@ -109,6 +109,28 @@ EquationRoots MergeResolventRoots(const EquationRoots &resolvent1, const Equatio
     return result;
 }
 
+double GetResolventCoefficientP(const EquationRoots &resolvent)
+{
+    return *std::max_element(std::begin(resolvent.root), std::end(resolvent.root));
+}
+
+double GetResolventCoefficientQ(double a, double b, double p)
+{
+    return GetSqrt((a * a / 4) - (b - p));
+}
+
+double GetResolventCoefficientR(double a, double c, double d, double p)
+{
+    double r = GetSqrt(abs(p * p / 4 - d));
+
+    if ((a * p / 2 - c) < 0)
+    {
+        r *= -1;
+    }
+
+    return r;
+}
+
 EquationRoots GetRootsOfProvidedEquation4(double a, double b, double c, double d)
 {
     double p = -b;
@@ -117,14 +139,9 @@ EquationRoots GetRootsOfProvidedEquation4(double a, double b, double c, double d
 
     EquationRoots resolvent = GetRootsOfProvidedCubicEquation(p, q, r);
 
-    p = *std::max_element(std::begin(resolvent.root), std::end(resolvent.root));
-    q = GetSqrt((a * a / 4) - (b - p));
-    r = GetSqrt(abs((p * p / 4) - d));
-
-    if (((a * p / 2) - c) < 0)
-    {
-        r *= -1;
-    }
+    p = GetResolventCoefficientP(resolvent);
+    q = GetResolventCoefficientQ(a, b, p);
+    r = GetResolventCoefficientR(a, c, d, p);
 
     EquationRoots resolvent1 = Solve2(1, a / 2 + q, p / 2 + r);
     EquationRoots resolvent2 = Solve2(1, a / 2 - q, p / 2 - r);

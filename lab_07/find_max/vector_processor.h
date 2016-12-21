@@ -8,7 +8,15 @@ bool FindMax(const std::vector<T> &vect, T &maxValue, const Less &less = Less())
         return false;
     }
 
-    maxValue = *std::max_element(vect.begin(), vect.end(), less);
+    maxValue = vect.at(0);
+
+    for (const auto &element : vect)
+    {
+        if (less(maxValue, element))
+        {
+            maxValue = element;
+        }
+    }
 
     return true;
 }

@@ -11,25 +11,14 @@ class CMyStack
 public:
     CMyStack() = default;
 
-    CMyStack(const CMyStack<T> &stack)
+    CMyStack(CMyStack<T> &stack)
     {
-        m_top = stack.m_top;
-        m_size = stack.m_size;
+        CopyFrom(stack.m_top);
     }
 
     ~CMyStack()
     {
-        Node *curr = m_top;
-
-        while (curr != nullptr)
-        {
-            Node *next = curr->next;
-            delete curr;
-            curr = next;
-            --m_size;
-        }
-
-        m_top = nullptr;
+        Clear();
     }
 
     void Push(const T &data)
@@ -65,17 +54,10 @@ public:
 
     void Clear()
     {
-        Node *curr = m_top;
-
-        while (curr != nullptr)
+        while (!IsEmpty())
         {
-            Node *next = curr->next;
-            delete curr;
-            curr = next;
-            --m_size;
+            Pop();
         }
-
-        m_top = nullptr;
     }
 
     size_t GetSize() const
@@ -98,14 +80,25 @@ public:
         return (m_size == 0);
     }
 
-    CMyStack& operator =(const CMyStack<T> &stack)
+    CMyStack& operator =(CMyStack<T> &stack)
     {
         Clear();
-        m_top = stack.m_top;
+        CopyFrom(stack.m_top);
+        stack.Clear();
         return *this;
     }
 
 private:
+    void CopyFrom(Node *top)
+    {
+        if (top->next != nullptr)
+        {
+            CopyFrom(top->next);
+        }
+
+        Push(top->data);
+    }
+
     Node *m_top = nullptr;
     size_t m_size = 0;
 };
