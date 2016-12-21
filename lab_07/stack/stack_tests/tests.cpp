@@ -124,4 +124,26 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
             BOOST_CHECK_EQUAL(stringStack.GetSize(), 0);
         }
     }
+
+    BOOST_AUTO_TEST_CASE(can_be_copied_correctly)
+    {
+        // int
+        {
+            for (int i = 0; i < 10; ++i)
+            {
+                intStack.Push(i);
+            }
+
+            CMyStack<int> newIntStack = intStack;
+
+            BOOST_CHECK_EQUAL(intStack.GetSize(), newIntStack.GetSize());
+
+            for (size_t i = 0; i < intStack.GetSize(); ++i)
+            {
+                BOOST_CHECK_EQUAL(intStack.GetTopElement(), newIntStack.GetTopElement());
+                intStack.Pop();
+                newIntStack.Pop();
+            }
+        }
+    }
 BOOST_AUTO_TEST_SUITE_END()
