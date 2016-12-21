@@ -9,7 +9,7 @@ class CStringStack
     };
 public:
     CStringStack();
-    ~CStringStack();
+    ~CStringStack() noexcept;
 
     void Push(const std::string &str);
     void Pop();

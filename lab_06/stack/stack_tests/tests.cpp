@@ -6,6 +6,21 @@ struct EmptyStack
     CStringStack stack;
 };
 
+class CMockString
+    : public std::string
+{
+public:
+    CMockString(std::string const& str)
+    : std::string(str)
+    {}
+
+    template <typename T>
+    T& operator=(T const& val)
+    {
+        throw std::exception("cannot assign this object");
+    }
+};
+
 BOOST_FIXTURE_TEST_SUITE(String_stack, EmptyStack)
     BOOST_AUTO_TEST_SUITE(when_created)
         BOOST_AUTO_TEST_CASE(is_empty)
@@ -27,6 +42,11 @@ BOOST_FIXTURE_TEST_SUITE(String_stack, EmptyStack)
             BOOST_CHECK_EQUAL(stack.GetSize(), oldSize + 1);
             stack.Push("World");
             BOOST_CHECK_EQUAL(stack.GetSize(), oldSize + 2);
+
+            CMockString str("hello");
+
+            std::string* arg = &str;
+            stack.Push(*arg);
         }
 
         BOOST_AUTO_TEST_CASE(makes_it_accessible_via_GetBackElement_method)
