@@ -8,15 +8,19 @@ bool FindMax(const std::vector<T> &vect, T &maxValue, const Less &less = Less())
         return false;
     }
 
-    maxValue = vect.front();
+    // храним адрес текущего максимального элемента,
+    // таким образом избегаем копирование
+    const T *max = &vect.front();
 
     for (const auto &element : vect)
     {
-        if (less(maxValue, element))
+        if (less(*max, element))
         {
-            maxValue = element;
+            max = &element;
         }
     }
+
+    maxValue = *max;
 
     return true;
 }

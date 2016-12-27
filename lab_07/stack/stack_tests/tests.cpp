@@ -21,19 +21,19 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
         BOOST_AUTO_TEST_CASE(pop_method_throws_an_exception_because_stack_is_empty)
         {
             // string
-            BOOST_REQUIRE_THROW(stringStack.Pop(), std::domain_error);
+            BOOST_REQUIRE_THROW(stringStack.Pop(), std::underflow_error);
 
             // int
-            BOOST_REQUIRE_THROW(intStack.Pop(), std::domain_error);
+            BOOST_REQUIRE_THROW(intStack.Pop(), std::underflow_error);
         }
 
         BOOST_AUTO_TEST_CASE(get_top_method_throws_an_exception_because_stack_is_empty)
         {
             // string
-            BOOST_REQUIRE_THROW(stringStack.GetTopElement(), std::domain_error);
+            BOOST_REQUIRE_THROW(stringStack.GetTopElement(), std::underflow_error);
 
             // int
-            BOOST_REQUIRE_THROW(intStack.GetTopElement(), std::domain_error);
+            BOOST_REQUIRE_THROW(intStack.GetTopElement(), std::underflow_error);
         }
     BOOST_AUTO_TEST_SUITE_END()
 
@@ -143,6 +143,32 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
                 BOOST_CHECK_EQUAL(intStack.GetTopElement(), newIntStack.GetTopElement());
                 intStack.Pop();
                 newIntStack.Pop();
+            }
+        }
+    }
+
+    BOOST_AUTO_TEST_CASE(can_be_moved_correctly)
+    {
+        // int
+        {
+            for (int i = 0; i < 10; ++i)
+            {
+                intStack.Push(i);
+            }
+            size_t size = intStack.GetSize();
+
+            CMyStack<int> copiedStack = intStack;
+            CMyStack<int> movedStack = std::move(intStack);
+
+            BOOST_CHECK_EQUAL(intStack.GetSize(), 0);
+            BOOST_CHECK_EQUAL(copiedStack.GetSize(), size);
+            BOOST_CHECK_EQUAL(movedStack.GetSize(), size);
+
+            while (!copiedStack.IsEmpty())
+            {
+                BOOST_CHECK_EQUAL(copiedStack.GetTopElement(), movedStack.GetTopElement());
+                copiedStack.Pop();
+                movedStack.Pop();
             }
         }
     }
