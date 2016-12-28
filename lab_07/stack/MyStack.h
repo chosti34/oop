@@ -88,7 +88,7 @@ public:
         return (m_size == 0);
     }
 
-    CMyStack& operator =(const CMyStack<T> &stack)
+    const CMyStack& operator =(const CMyStack<T> &stack)
     {
         if (std::addressof(stack) != this)
         {
@@ -97,7 +97,7 @@ public:
         return *this;
     }
 
-    CMyStack& operator =(CMyStack &&stack)
+    const CMyStack& operator =(CMyStack &&stack)
     {
         if (std::addressof(stack) != this)
         {
@@ -130,6 +130,7 @@ private:
 
         Push(top->data);
     }
+
 
     Node *m_top = nullptr;
     size_t m_size = 0;
