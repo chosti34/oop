@@ -131,7 +131,6 @@ private:
         Push(top->data);
     }
 
-
     Node *m_top = nullptr;
     size_t m_size = 0;
 };
