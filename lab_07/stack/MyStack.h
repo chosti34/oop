@@ -14,38 +14,12 @@ public:
 
     CMyStack(const CMyStack<T> &stack) // copy constructor
     {
-        if (std::addressof(stack) != this)
-        {
-            m_top = nullptr;
-            m_size = 0;
-
-            if (!stack.IsEmpty())
-            {
-                m_top = new Node;
-                m_top->data = stack.GetTopElement();
-
-                Node *thisPtr = m_top;
-                Node *rhsPtr = stack.m_top->next;
-
-                while (rhsPtr != nullptr)
-                {
-                    thisPtr->next = new Node;
-                    thisPtr->next->data = rhsPtr->data;
-                    thisPtr = thisPtr->next;
-                    rhsPtr = rhsPtr->next;
-                }
-
-                m_size = stack.GetSize();
-            }
-        }
+        *this = stack;
     }
 
     CMyStack(CMyStack<T> &&stack) // move constructor
     {
-        m_top = stack.m_top;
-        m_size = stack.m_size;
-        stack.m_top = nullptr;
-        stack.m_size = 0;
+        *this = std::move(stack);
     }
 
     ~CMyStack() noexcept
@@ -107,27 +81,7 @@ public:
     {
         if (std::addressof(stack) != this)
         {
-            m_top = nullptr;
-            m_size = 0;
-
-            if (!stack.IsEmpty())
-            {
-                m_top = new Node;
-                m_top->data = stack.GetTopElement();
-
-                Node *thisPtr = m_top;
-                Node *rhsPtr = stack.m_top->next;
-
-                while (rhsPtr != nullptr)
-                {
-                    thisPtr->next = new Node;
-                    thisPtr->next->data = rhsPtr->data;
-                    thisPtr = thisPtr->next;
-                    rhsPtr = rhsPtr->next;
-                }
-
-                m_size = stack.GetSize();
-            }
+            CopyItems(stack);
         }
 
         return *this;
@@ -142,10 +96,33 @@ public:
             stack.m_top = nullptr;
             stack.m_size = 0;
         }
+
         return *this;
     }
 
 private:
+    void CopyItems(const CMyStack<T> &stack)
+    {
+        if (!stack.IsEmpty())
+        {
+            m_top = new Node;
+            m_top->data = stack.GetTopElement();
+
+            Node *thisPtr = m_top;
+            Node *rhsPtr = stack.m_top->next;
+
+            while (rhsPtr != nullptr)
+            {
+                thisPtr->next = new Node;
+                thisPtr->next->data = rhsPtr->data;
+                thisPtr = thisPtr->next;
+                rhsPtr = rhsPtr->next;
+            }
+
+            m_size = stack.GetSize();
+        }
+    }
+
     Node *m_top = nullptr;
     size_t m_size = 0;
 };

@@ -7,8 +7,6 @@ struct EmptyStack
     CMyStack<int> intStack;
 };
 
-// TODO - function - StacksAreEqual();
-
 BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
     BOOST_AUTO_TEST_SUITE(when_created)
         BOOST_AUTO_TEST_CASE(is_empty)
@@ -44,7 +42,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
         {
             // int
             {
-                size_t oldSize = intStack.GetSize();
+                std::size_t oldSize = intStack.GetSize();
                 intStack.Push(1);
                 BOOST_CHECK_EQUAL(intStack.GetSize(), oldSize + 1);
                 intStack.Push(2);
@@ -53,7 +51,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
 
             // string
             {
-                size_t oldSize = stringStack.GetSize();
+                std::size_t oldSize = stringStack.GetSize();
                 stringStack.Push("hello");
                 BOOST_CHECK_EQUAL(stringStack.GetSize(), oldSize + 1);
                 stringStack.Push("world");
@@ -84,7 +82,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
         {
             // int
             {
-                size_t oldSize = intStack.GetSize();
+                std::size_t oldSize = intStack.GetSize();
                 intStack.Push(11);
                 BOOST_CHECK_EQUAL(intStack.GetSize(), oldSize + 1);
                 intStack.Pop();
@@ -93,7 +91,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
 
             // string
             {
-                size_t oldSize = stringStack.GetSize();
+                std::size_t oldSize = stringStack.GetSize();
                 stringStack.Push("hello");
                 BOOST_CHECK_EQUAL(stringStack.GetSize(), oldSize + 1);
                 stringStack.Pop();
@@ -135,14 +133,12 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
             {
                 intStack.Push(i);
             }
-
             CMyStack<int> newIntStack = intStack;
 
             BOOST_CHECK_EQUAL(intStack.GetSize(), newIntStack.GetSize());
-
-            for (size_t i = 0; i < intStack.GetSize(); ++i)
+            for (std::size_t i = 0; i < intStack.GetSize(); ++i)
             {
-                BOOST_CHECK_EQUAL(intStack.GetTopElement(), newIntStack.GetTopElement());
+                BOOST_CHECK_EQUAL(intStack.GetSize(), newIntStack.GetSize());
                 intStack.Pop();
                 newIntStack.Pop();
             }
@@ -154,24 +150,17 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
             {
                 intStack.Push(i);
             }
-
             CMyStack<int> newIntStack;
             newIntStack = intStack;
 
             BOOST_CHECK_EQUAL(intStack.GetSize(), newIntStack.GetSize());
-
-            for (size_t i = 0; i < intStack.GetSize(); ++i)
+            while (!intStack.IsEmpty())
             {
                 BOOST_CHECK_EQUAL(intStack.GetTopElement(), newIntStack.GetTopElement());
                 intStack.Pop();
                 newIntStack.Pop();
             }
         }
-
-        CMyStack<int> st = st;
-        st = st;
-        BOOST_REQUIRE_THROW(st.GetTopElement(), std::underflow_error);
-        BOOST_CHECK(st.GetSize() == 0);
     }
 
     BOOST_AUTO_TEST_CASE(can_be_moved_correctly)
@@ -182,7 +171,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
             {
                 intStack.Push(i);
             }
-            size_t size = intStack.GetSize();
+            std::size_t size = intStack.GetSize();
 
             CMyStack<int> copiedStack = intStack;
             CMyStack<int> movedStack = std::move(intStack);
@@ -201,7 +190,26 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
 
         // by assignment operator
         {
-            
+            for (int i = 0; i < 10; ++i)
+            {
+                intStack.Push(i);
+            }
+            std::size_t size = intStack.GetSize();
+
+            CMyStack<int> copiedStack = intStack;
+            CMyStack<int> movedStack;
+            movedStack = std::move(intStack);
+
+            BOOST_CHECK_EQUAL(intStack.GetSize(), 0);
+            BOOST_CHECK_EQUAL(copiedStack.GetSize(), size);
+            BOOST_CHECK_EQUAL(movedStack.GetSize(), size);
+
+            while (!copiedStack.IsEmpty())
+            {
+                BOOST_CHECK_EQUAL(copiedStack.GetTopElement(), movedStack.GetTopElement());
+                copiedStack.Pop();
+                movedStack.Pop();
+            }
         }
     }
 BOOST_AUTO_TEST_SUITE_END()
