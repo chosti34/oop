@@ -30,10 +30,19 @@ public:
     void Push(const T &data)
     {
         Node *node = new Node;
-        node->data = data;
-        node->next = m_top;
-        m_top = node;
-        ++m_size;
+
+        try
+        {
+            node->data = data;
+            node->next = m_top;
+            m_top = node;
+            ++m_size;
+        }
+        catch (...)
+        {
+            delete node;
+            throw;
+        }
     }
 
     void Pop()
@@ -57,7 +66,7 @@ public:
         }
     }
 
-    size_t GetSize() const
+    std::size_t GetSize() const
     {
         return m_size;
     }
@@ -124,5 +133,5 @@ private:
     }
 
     Node *m_top = nullptr;
-    size_t m_size = 0;
+    std::size_t m_size = 0;
 };

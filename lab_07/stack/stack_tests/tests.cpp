@@ -11,29 +11,20 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
     BOOST_AUTO_TEST_SUITE(when_created)
         BOOST_AUTO_TEST_CASE(is_empty)
         {
-            // string
-            BOOST_CHECK_EQUAL(stringStack.GetSize(), 0);
-
-            // int
-            BOOST_CHECK_EQUAL(intStack.GetSize(), 0);
+            BOOST_CHECK_EQUAL(intStack.GetSize(), 0); // int
+            BOOST_CHECK_EQUAL(stringStack.GetSize(), 0); // string
         }
 
         BOOST_AUTO_TEST_CASE(pop_method_throws_an_exception_because_stack_is_empty)
         {
-            // string
-            BOOST_REQUIRE_THROW(stringStack.Pop(), std::underflow_error);
-
-            // int
-            BOOST_REQUIRE_THROW(intStack.Pop(), std::underflow_error);
+            BOOST_REQUIRE_THROW(intStack.Pop(), std::underflow_error); // int
+            BOOST_REQUIRE_THROW(stringStack.Pop(), std::underflow_error); // string
         }
 
         BOOST_AUTO_TEST_CASE(get_top_method_throws_an_exception_because_stack_is_empty)
         {
-            // string
-            BOOST_REQUIRE_THROW(stringStack.GetTopElement(), std::underflow_error);
-
-            // int
-            BOOST_REQUIRE_THROW(intStack.GetTopElement(), std::underflow_error);
+            BOOST_REQUIRE_THROW(intStack.GetTopElement(), std::underflow_error); // int
+            BOOST_REQUIRE_THROW(stringStack.GetTopElement(), std::underflow_error); // string
         }
     BOOST_AUTO_TEST_SUITE_END()
 
@@ -171,20 +162,20 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
             {
                 intStack.Push(i);
             }
-            std::size_t size = intStack.GetSize();
+            std::size_t oldSize = intStack.GetSize();
 
-            CMyStack<int> copiedStack = intStack;
-            CMyStack<int> movedStack = std::move(intStack);
+            CMyStack<int> copy = intStack;
+            CMyStack<int> acceptor = std::move(intStack);
 
             BOOST_CHECK_EQUAL(intStack.GetSize(), 0);
-            BOOST_CHECK_EQUAL(copiedStack.GetSize(), size);
-            BOOST_CHECK_EQUAL(movedStack.GetSize(), size);
+            BOOST_CHECK_EQUAL(copy.GetSize(), oldSize);
+            BOOST_CHECK_EQUAL(acceptor.GetSize(), oldSize);
 
-            while (!copiedStack.IsEmpty())
+            while (!copy.IsEmpty())
             {
-                BOOST_CHECK_EQUAL(copiedStack.GetTopElement(), movedStack.GetTopElement());
-                copiedStack.Pop();
-                movedStack.Pop();
+                BOOST_CHECK_EQUAL(copy.GetTopElement(), acceptor.GetTopElement());
+                copy.Pop();
+                acceptor.Pop();
             }
         }
 
@@ -194,21 +185,21 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStack)
             {
                 intStack.Push(i);
             }
-            std::size_t size = intStack.GetSize();
+            std::size_t oldSize = intStack.GetSize();
 
-            CMyStack<int> copiedStack = intStack;
-            CMyStack<int> movedStack;
-            movedStack = std::move(intStack);
+            CMyStack<int> copy = intStack;
+            CMyStack<int> acceptor;
+            acceptor = std::move(intStack);
 
             BOOST_CHECK_EQUAL(intStack.GetSize(), 0);
-            BOOST_CHECK_EQUAL(copiedStack.GetSize(), size);
-            BOOST_CHECK_EQUAL(movedStack.GetSize(), size);
+            BOOST_CHECK_EQUAL(copy.GetSize(), oldSize);
+            BOOST_CHECK_EQUAL(acceptor.GetSize(), oldSize);
 
-            while (!copiedStack.IsEmpty())
+            while (!copy.IsEmpty())
             {
-                BOOST_CHECK_EQUAL(copiedStack.GetTopElement(), movedStack.GetTopElement());
-                copiedStack.Pop();
-                movedStack.Pop();
+                BOOST_CHECK_EQUAL(copy.GetTopElement(), acceptor.GetTopElement());
+                copy.Pop();
+                acceptor.Pop();
             }
         }
     }
