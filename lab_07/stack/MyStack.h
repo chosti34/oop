@@ -8,12 +8,36 @@ class CMyStack
         T data;
         Node *next;
     };
+
 public:
     CMyStack() = default;
 
     CMyStack(const CMyStack<T> &stack) // copy constructor
     {
-        CopyItems(stack.m_top);
+        if (std::addressof(stack) != this)
+        {
+            m_top = nullptr;
+            m_size = 0;
+
+            if (!stack.IsEmpty())
+            {
+                m_top = new Node;
+                m_top->data = stack.GetTopElement();
+
+                Node *thisPtr = m_top;
+                Node *rhsPtr = stack.m_top->next;
+
+                while (rhsPtr != nullptr)
+                {
+                    thisPtr->next = new Node;
+                    thisPtr->next->data = rhsPtr->data;
+                    thisPtr = thisPtr->next;
+                    rhsPtr = rhsPtr->next;
+                }
+
+                m_size = stack.GetSize();
+            }
+        }
     }
 
     CMyStack(CMyStack<T> &&stack) // move constructor
@@ -33,16 +57,7 @@ public:
     {
         Node *node = new Node;
         node->data = data;
-
-        if (m_top != nullptr)
-        {
-            node->next = m_top;
-        }
-        else // stack is empty
-        {
-            node->next = nullptr;
-        }
-
+        node->next = m_top;
         m_top = node;
         ++m_size;
     }
@@ -92,8 +107,29 @@ public:
     {
         if (std::addressof(stack) != this)
         {
-            CopyItems(stack.m_top);
+            m_top = nullptr;
+            m_size = 0;
+
+            if (!stack.IsEmpty())
+            {
+                m_top = new Node;
+                m_top->data = stack.GetTopElement();
+
+                Node *thisPtr = m_top;
+                Node *rhsPtr = stack.m_top->next;
+
+                while (rhsPtr != nullptr)
+                {
+                    thisPtr->next = new Node;
+                    thisPtr->next->data = rhsPtr->data;
+                    thisPtr = thisPtr->next;
+                    rhsPtr = rhsPtr->next;
+                }
+
+                m_size = stack.GetSize();
+            }
         }
+
         return *this;
     }
 
@@ -109,28 +145,7 @@ public:
         return *this;
     }
 
-    void Print(std::ostream &strm = std::cout) const
-    {
-       Node *curr = m_top;
-
-       while (curr != nullptr)
-       {
-           strm << curr->data;
-           curr = curr->next;
-       }
-    }
-
 private:
-    void CopyItems(Node *top)
-    {
-        if (top->next != nullptr)
-        {
-            CopyItems(top->next);
-        }
-
-        Push(top->data);
-    }
-
     Node *m_top = nullptr;
     size_t m_size = 0;
 };
