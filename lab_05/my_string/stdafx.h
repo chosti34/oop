@@ -13,4 +13,10 @@
 // TODO: reference additional headers your program requires here
 
 #include <iostream>
-#include <stack>
+#include <string>
+#include <algorithm>
+#include <sstream>
+
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <math.h>
